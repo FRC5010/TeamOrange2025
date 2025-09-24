@@ -1,0 +1,442 @@
+[
+  {
+    "name": "/SmartDashboard/AprilTagPoseSystem/AprilTagPoseSystem/Std Vector Factor",
+    "type": "double",
+    "value": 0.1,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/SmartDashboard/AprilTagPoseSystem/AprilTagPoseSystem/Std Vector Radian Factor",
+    "type": "double",
+    "value": 5.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/YAGSLSwerveDrivetrain/Field Oriented",
+    "type": "boolean",
+    "value": true,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/YAGSLSwerveDrivetrain/Has Issues",
+    "type": "boolean",
+    "value": false,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Shuffleboard/BabySwerve/BabySwerve/Alliance",
+    "type": "string",
+    "value": "Blue",
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/SmartDashboard/DisplayValueSubsystem/DisplayValueSubsystem/OUTPUT_ANGLE (°)",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/SmartDashboard/DisplayValueSubsystem/DisplayValueSubsystem/OUTPUT_BOOLEAN",
+    "type": "boolean",
+    "value": false,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/SmartDashboard/DisplayValueSubsystem/DisplayValueSubsystem/OUTPUT_DOUBLE",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/SmartDashboard/DisplayValueSubsystem/DisplayValueSubsystem/OUTPUT_FLOAT",
+    "type": "float",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/SmartDashboard/DisplayValueSubsystem/Config/INPUT_ANGLE (°)",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/SmartDashboard/DisplayValueSubsystem/Config/INPUT_BOOLEAN",
+    "type": "boolean",
+    "value": false,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/SmartDashboard/DisplayValueSubsystem/Config/INPUT_DOUBLE",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/SmartDashboard/DisplayValueSubsystem/Config/INPUT_FLOAT",
+    "type": "float",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/SmartDashboard/DisplayValueSubsystem/Input/INPUT_LENGTH (m)",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/SmartDashboard/DisplayValueSubsystem/Input/INPUT_LONG",
+    "type": "int",
+    "value": 0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/SmartDashboard/DisplayValueSubsystem/Input/INPUT_STRING",
+    "type": "string",
+    "value": "",
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/SmartDashboard/DisplayValueSubsystem/Input/INPUT_TIME (s)",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Shuffleboard/ExampleRobot/ExampleRobot/Alliance",
+    "type": "string",
+    "value": "Blue",
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Shuffleboard/ExampleSubsystem/velocity_motor/kP",
+    "type": "double",
+    "value": 0.1,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Shuffleboard/ExampleSubsystem/velocity_motor/kI",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Shuffleboard/ExampleSubsystem/velocity_motor/kD",
+    "type": "double",
+    "value": 0.01,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Shuffleboard/ExampleSubsystem/velocity_motor/kF",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Shuffleboard/ExampleSubsystem/velocity_motor/kS",
+    "type": "double",
+    "value": 0.1,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Shuffleboard/ExampleSubsystem/velocity_motor/kV",
+    "type": "double",
+    "value": 0.1,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Shuffleboard/ExampleSubsystem/velocity_motor/kA",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Shuffleboard/ExampleSubsystem/velocity_motor/IZone",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Shuffleboard/ExampleSubsystem/velocity_motor/MinOutput",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Shuffleboard/ExampleSubsystem/velocity_motor/MaxOutput",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Shuffleboard/ExampleSubsystem/velocity_motor/Reference",
+    "type": "double",
+    "value": -0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Shuffleboard/ExampleSubsystem/velocity_motor/Tolerance",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Shuffleboard/ExampleSubsystem/velocity_motor/FeedForward",
+    "type": "double",
+    "value": 0.1,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Shuffleboard/ExampleSubsystem/velocity_motor/ControlType",
+    "type": "string",
+    "value": "",
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Shuffleboard/ExampleSubsystem/velocity_motor/Position",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Shuffleboard/ExampleSubsystem/velocity_motor/Velocity",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Shuffleboard/ExampleSubsystem/velocity_motor/Effort (V)",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Shuffleboard/ExampleSubsystem/angular/kP",
+    "type": "double",
+    "value": 0.01,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Shuffleboard/ExampleSubsystem/angular/kI",
+    "type": "double",
+    "value": 2.5e-05,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Shuffleboard/ExampleSubsystem/angular/kD",
+    "type": "double",
+    "value": 0.003,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Shuffleboard/ExampleSubsystem/angular/kF",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Shuffleboard/ExampleSubsystem/angular/kS",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Shuffleboard/ExampleSubsystem/angular/kV",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Shuffleboard/ExampleSubsystem/angular/kA",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Shuffleboard/ExampleSubsystem/angular/IZone",
+    "type": "double",
+    "value": 3.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Shuffleboard/ExampleSubsystem/angular/MinOutput",
+    "type": "double",
+    "value": -12.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Shuffleboard/ExampleSubsystem/angular/MaxOutput",
+    "type": "double",
+    "value": 12.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Shuffleboard/ExampleSubsystem/angular/Reference",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Shuffleboard/ExampleSubsystem/angular/Tolerance",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Shuffleboard/ExampleSubsystem/angular/FeedForward",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Shuffleboard/ExampleSubsystem/angular/ControlType",
+    "type": "string",
+    "value": "POSITION",
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Shuffleboard/ExampleSubsystem/angular/Position",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Shuffleboard/ExampleSubsystem/angular/Velocity",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Shuffleboard/ExampleSubsystem/angular/Effort (V)",
+    "type": "double",
+    "value": -12.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/angular/kG",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Shuffleboard/ExampleSubsystem/velocity_motor/Max Velocity",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Shuffleboard/ExampleSubsystem/velocity_motor/Max Acceleration",
+    "type": "double",
+    "value": 0.0,
+    "properties": {
+      "persistent": true
+    }
+  }
+]

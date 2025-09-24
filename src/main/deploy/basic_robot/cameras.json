@@ -1,0 +1,9 @@
+{
+  "cameras": [
+    "intake.json",
+    "localization.json",
+    "shooter.json",
+    "quest.json"
+  ],
+  "aprilTagLayout": "/org/frc5010/lobbinloco/LobbinLoco.json"
+}
