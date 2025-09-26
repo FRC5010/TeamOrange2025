@@ -4,13 +4,19 @@
 
 package org.frc5010.common.config.json;
 
+import static edu.wpi.first.units.Units.Degrees;
+import static edu.wpi.first.units.Units.Meters;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.RobotBase;
 import java.io.File;
 import java.io.IOException;
 import java.util.Optional;
 import org.frc5010.common.arch.GenericRobot;
 import org.frc5010.common.config.ConfigConstants;
+import org.frc5010.common.config.UnitsParser;
 import org.frc5010.common.constants.MotorFeedFwdConstants;
 import org.frc5010.common.constants.RobotConstantsDef;
 import org.frc5010.common.constants.SwerveConstants;
@@ -32,6 +38,9 @@ public class YAGSLDrivetrainJson implements DrivetrainPropertiesJson {
    * in the YAGSL config
    */
   public String[] driveModules;
+
+  /** Starting pose of the robot */
+  public Pose2dJson startingPose = new Pose2dJson();
 
   public void readDrivetrainConfiguration(GenericRobot robot, File baseDirectory)
       throws IOException {
@@ -59,14 +68,19 @@ public class YAGSLDrivetrainJson implements DrivetrainPropertiesJson {
         }
       }
     }
-    return;
   }
   ;
 
   @Override
   public void createDriveTrain(GenericRobot robot) {
+    Pose2d startingPoseFromJson =
+        new Pose2d(
+            UnitsParser.parseDistance(startingPose.x).in(Meters),
+            UnitsParser.parseDistance(startingPose.y).in(Meters),
+            new Rotation2d(UnitsParser.parseAngle(startingPose.rotation).in(Degrees)));
     YAGSLSwerveDrivetrain yagsl =
-        new YAGSLSwerveDrivetrain(robot.getDrivetrainConstants(), turningMotorGearRatio, directory);
+        new YAGSLSwerveDrivetrain(
+            robot.getDrivetrainConstants(), turningMotorGearRatio, directory, startingPoseFromJson);
     GenericSwerveDrivetrain drivetrain =
         new GenericSwerveDrivetrain(
             new LoggedMechanism2d(RobotConstantsDef.robotVisualH, RobotConstantsDef.robotVisualV),
