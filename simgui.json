@@ -71,7 +71,6 @@
       "/LiveWindow/Ungrouped/Scheduler": "Scheduler",
       "/Shuffleboard/BabySwerve/Auto Modes": "String Chooser",
       "/Shuffleboard/ExampleRobot/Auto Modes": "String Chooser",
-      "/Shuffleboard/Pose/Pose Field": "Field2d",
       "/SmartDashboard/Alerts": "Alerts",
       "/SmartDashboard/Arm/mechanism": "Mechanism2d",
       "/SmartDashboard/Auto Modes": "String Chooser",
@@ -164,7 +163,7 @@
           "width": 0.44999998807907104
         },
         "CARPET18": {
-          "image": "C:\\workspace\\FRC5010LibExample\\Example\\pictures\\carpet.png",
+          "image": ".\\pictures\\carpet.png",
           "length": 0.4000000059604645,
           "width": 0.4000000059604645
         },
@@ -668,17 +667,9 @@
         "left": 534,
         "right": 3466,
         "top": 291,
-        "width": 17.54825210571289,
-        "window": {
-          "visible": true
-        }
+        "width": 17.54825210571289
       },
       "/SmartDashboard/Robot Visual": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/SmartDashboard/Turret/mechanism": {
         "window": {
           "visible": true
         }
