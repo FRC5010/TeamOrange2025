@@ -6,5 +6,19 @@
     "frontright.json",
     "backleft.json",
     "backright.json"
-  ]
+  ],
+  "startingPose": {
+    "x": {
+      "val": 1.0,
+      "uom": "m"
+    },
+    "y": {
+      "val": 1.0,
+      "uom": "m"
+    },
+    "rotation": {
+      "val": 0.0,
+      "uom": "deg"
+    }
+  }
 }

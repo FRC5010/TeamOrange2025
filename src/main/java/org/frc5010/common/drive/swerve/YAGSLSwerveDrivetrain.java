@@ -5,7 +5,6 @@
 package org.frc5010.common.drive.swerve;
 
 import static edu.wpi.first.units.Units.DegreesPerSecond;
-import static edu.wpi.first.units.Units.Meter;
 import static edu.wpi.first.units.Units.Second;
 import static edu.wpi.first.units.Units.Volts;
 
@@ -61,7 +60,10 @@ public class YAGSLSwerveDrivetrain extends SwerveDriveFunctions {
   public double maximumSpeed = Units.feetToMeters(19.5);
 
   public YAGSLSwerveDrivetrain(
-      GenericDrivetrainConstants constants, double kTurningMotorGearRatio, String swerveType) {
+      GenericDrivetrainConstants constants,
+      double kTurningMotorGearRatio,
+      String swerveType,
+      Pose2d initialPose) {
     this.maximumSpeed = constants.getkTeleDriveMaxSpeedMetersPerSecond();
 
     // Angle conversion factor is 360 / (GEAR RATIO * ENCODER RESOLUTION)
@@ -94,12 +96,7 @@ public class YAGSLSwerveDrivetrain extends SwerveDriveFunctions {
     try {
       File swerveJsonDirectory = new File(Filesystem.getDeployDirectory(), swerveType);
       swerveDrive =
-          new SwerveParser(swerveJsonDirectory)
-              .createSwerveDrive(
-                  maximumSpeed,
-                  new Pose2d(
-                      new Translation2d(Meter.of(7.417), Meter.of(4)),
-                      Rotation2d.fromDegrees(180)));
+          new SwerveParser(swerveJsonDirectory).createSwerveDrive(maximumSpeed, initialPose);
     } catch (Exception e) {
       System.out.println(e.getMessage());
       throw new RuntimeException(e);
