@@ -9,10 +9,12 @@ import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.apriltag.AprilTagFields;
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 import org.frc5010.common.arch.GenericRobot;
 import org.frc5010.common.vision.AprilTags;
+import org.ironmaple.simulation.SimulatedArena;
 
 /** JSON class with an array of cameras to configure */
 public class VisionPropertiesJson {
@@ -20,6 +22,7 @@ public class VisionPropertiesJson {
   public String[] cameras;
 
   public String aprilTagLayout = "default";
+  public String simulatedField = "default";
 
   /**
    * Creates cameras for a given robot using the provided map of camera configurations.
@@ -43,6 +46,23 @@ public class VisionPropertiesJson {
    * @return the map of camera configurations
    */
   public Map<String, CameraConfigurationJson> readCameraSystem(File directory) throws IOException {
+    if (!simulatedField.equalsIgnoreCase("default")) {
+      try {
+        SimulatedArena arena =
+            Class.forName(simulatedField)
+                .asSubclass(SimulatedArena.class)
+                .getDeclaredConstructor()
+                .newInstance();
+        SimulatedArena.overrideInstance(arena);
+      } catch (ClassNotFoundException
+          | NoSuchMethodException
+          | InstantiationException
+          | IllegalAccessException
+          | InvocationTargetException e) {
+        System.err.println("Error creating arena instance: " + e.getMessage());
+        throw new RuntimeException(e);
+      }
+    }
     if (aprilTagLayout.equals("5010")) {
       AprilTags.setAprilTagFieldLayout(AprilTags.aprilTagRoomLayout);
     } else if (aprilTagLayout.equals("default")) {
