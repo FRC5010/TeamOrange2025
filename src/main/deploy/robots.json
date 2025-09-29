@@ -10,6 +10,12 @@
       "id": "baby_swerve",
       "robotClass": "frc.robot.BabySwerve",
       "simulate": true,
+      "competition": false
+    },
+    "buttercup_swerve": {
+      "id": "buttercup",
+      "robotClass": "frc.robot.orangeteam.Buttercup",
+      "simulate": true,
       "competition": true
     }
   }
