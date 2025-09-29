@@ -1,6 +1,5 @@
 {
   "controllers": [
-    "driver.json",
-    "operator.json"
+    "driver.json"
   ]
 }
