@@ -4,12 +4,12 @@
     "basic_robot": {
       "id": "basic_robot",
       "robotClass": "frc.robot.ExampleRobot",
-      "simulate": true
+      "simulate": false
     },
     "baby_swerve": {
       "id": "baby_swerve",
       "robotClass": "frc.robot.BabySwerve",
-      "simulate": true,
+      "simulate": false,
       "competition": false
     },
     "buttercup_swerve": {
