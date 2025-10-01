@@ -6,9 +6,9 @@
       "robotClass": "frc.robot.ExampleRobot",
       "simulate": true
     },
-    "baby_swerve": {
-      "id": "baby_swerve",
-      "robotClass": "frc.robot.BabySwerve",
+    "black_robot": {
+      "id": "black_robot",
+      "robotClass": "frc.robot.blackteam.BlackRobot",
       "simulate": true,
       "competition": true
     }
