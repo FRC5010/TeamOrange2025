@@ -3,14 +3,14 @@ package frc.robot;
 /** Automatically generated file containing build version information. */
 public final class BuildConstants {
   public static final String MAVEN_GROUP = "";
-  public static final String MAVEN_NAME = "FRC5010Example";
+  public static final String MAVEN_NAME = "TeamOrange2025";
   public static final String VERSION = "unspecified";
-  public static final int GIT_REVISION = 1;
-  public static final String GIT_SHA = "a5a7602d311560232663a0b03e3e2a5939ad101a";
-  public static final String GIT_DATE = "2025-09-24 17:41:55 EDT";
-  public static final String GIT_BRANCH = "main";
-  public static final String BUILD_DATE = "2025-09-25 20:26:00 EDT";
-  public static final long BUILD_UNIX_TIME = 1758846360959L;
+  public static final int GIT_REVISION = 12;
+  public static final String GIT_SHA = "898723135c43e2b6b26fb5dab1f67a42809cefd8";
+  public static final String GIT_DATE = "2025-10-01 17:09:28 EDT";
+  public static final String GIT_BRANCH = "6-swerve-updates";
+  public static final String BUILD_DATE = "2025-10-01 17:49:41 EDT";
+  public static final long BUILD_UNIX_TIME = 1759355381417L;
   public static final int DIRTY = 1;
 
   private BuildConstants() {}

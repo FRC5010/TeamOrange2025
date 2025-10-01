@@ -14,7 +14,7 @@
     },
     "buttercup_swerve": {
       "id": "buttercup",
-      "robotClass": "frc.robot.orangeteam.Buttercup",
+      "robotClass": "frc.robot.OrangeTeam.Buttercup",
       "simulate": true,
       "competition": true
     }

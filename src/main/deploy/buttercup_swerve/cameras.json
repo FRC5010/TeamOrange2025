@@ -1,7 +1,6 @@
 {
   "cameras": [
-    
-    "localization.json", 
+    "localization.json",
     "shooter.json"
   ],
   "aprilTagLayout": "/org/frc5010/lobbinloco/LobbinLoco.json",
