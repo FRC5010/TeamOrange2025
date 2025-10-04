@@ -494,43 +494,43 @@
         },
         "GPB12": {
           "image": ".\\pictures\\gpb.png",
-          "length": 0.4,
-          "width": 0.4
+          "length": 0.4000000059604645,
+          "width": 0.4000000059604645
         },
         "GPB13": {
           "image": ".\\pictures\\gpb.png",
-          "length": 0.4,
-          "width": 0.4
+          "length": 0.4000000059604645,
+          "width": 0.4000000059604645
         },
         "GPB14": {
           "image": ".\\pictures\\gpb.png",
-          "length": 0.4,
-          "width": 0.4
+          "length": 0.4000000059604645,
+          "width": 0.4000000059604645
         },
         "GPB15": {
           "image": ".\\pictures\\gpb.png",
-          "length": 0.4,
-          "width": 0.4
+          "length": 0.4000000059604645,
+          "width": 0.4000000059604645
         },
         "GPB16": {
           "image": ".\\pictures\\gpb.png",
-          "length": 0.4,
-          "width": 0.4
+          "length": 0.4000000059604645,
+          "width": 0.4000000059604645
         },
         "GPB17": {
           "image": ".\\pictures\\gpb.png",
-          "length": 0.4,
-          "width": 0.4
+          "length": 0.4000000059604645,
+          "width": 0.4000000059604645
         },
         "GPB18": {
           "image": ".\\pictures\\gpb.png",
-          "length": 0.4,
-          "width": 0.4
+          "length": 0.4000000059604645,
+          "width": 0.4000000059604645
         },
         "GPB19": {
           "image": ".\\pictures\\gpb.png",
-          "length": 0.4,
-          "width": 0.4
+          "length": 0.4000000059604645,
+          "width": 0.4000000059604645
         },
         "GPB2": {
           "image": ".\\pictures\\gpb.png",
@@ -539,28 +539,28 @@
         },
         "GPB20": {
           "image": ".\\pictures\\gpb.png",
-          "length": 0.4,
-          "width": 0.4
+          "length": 0.4000000059604645,
+          "width": 0.4000000059604645
         },
         "GPB21": {
           "image": ".\\pictures\\gpb.png",
-          "length": 0.4,
-          "width": 0.4
+          "length": 0.4000000059604645,
+          "width": 0.4000000059604645
         },
         "GPB22": {
           "image": ".\\pictures\\gpb.png",
-          "length": 0.4,
-          "width": 0.4
+          "length": 0.4000000059604645,
+          "width": 0.4000000059604645
         },
         "GPB23": {
           "image": ".\\pictures\\gpb.png",
-          "length": 0.4,
-          "width": 0.4
+          "length": 0.4000000059604645,
+          "width": 0.4000000059604645
         },
         "GPB24": {
           "image": ".\\pictures\\gpb.png",
-          "length": 0.4,
-          "width": 0.4
+          "length": 0.4000000059604645,
+          "width": 0.4000000059604645
         },
         "GPB3": {
           "image": ".\\pictures\\gpb.png",
@@ -667,7 +667,10 @@
         "left": 534,
         "right": 3466,
         "top": 291,
-        "width": 17.54825210571289
+        "width": 17.54825210571289,
+        "window": {
+          "visible": true
+        }
       },
       "/SmartDashboard/Robot Visual": {
         "window": {

@@ -63,21 +63,24 @@ public class VisionPropertiesJson {
         throw new RuntimeException(e);
       }
     }
-    if (aprilTagLayout.equals("5010")) {
-      AprilTags.setAprilTagFieldLayout(AprilTags.aprilTagRoomLayout);
-    } else if (aprilTagLayout.equals("default")) {
-      AprilTagFieldLayout layout =
-          AprilTagFieldLayout.loadFromResource(AprilTagFields.kDefaultField.m_resourceFile);
-      AprilTags.setAprilTagFieldLayout(layout);
-    } else {
-      try {
+    switch (aprilTagLayout) {
+      case "5010" -> AprilTags.setAprilTagFieldLayout(AprilTags.aprilTagRoomLayout);
+      case "default" -> {
         AprilTagFieldLayout layout =
-            AprilTagFieldLayout.loadFromResource(
-                AprilTagFields.valueOf(aprilTagLayout).m_resourceFile);
+            AprilTagFieldLayout.loadFromResource(AprilTagFields.kDefaultField.m_resourceFile);
         AprilTags.setAprilTagFieldLayout(layout);
-      } catch (IllegalArgumentException e) {
-        AprilTagFieldLayout layout = AprilTagFieldLayout.loadFromResource(aprilTagLayout);
-        AprilTags.setAprilTagFieldLayout(layout);
+      }
+      default -> {
+        AprilTagFieldLayout layout;
+        try {
+          layout =
+              AprilTagFieldLayout.loadFromResource(
+                  AprilTagFields.valueOf(aprilTagLayout).m_resourceFile);
+          AprilTags.setAprilTagFieldLayout(layout);
+        } catch (IllegalArgumentException e) {
+          layout = AprilTagFieldLayout.loadFromResource(aprilTagLayout);
+          AprilTags.setAprilTagFieldLayout(layout);
+        }
       }
     }
 

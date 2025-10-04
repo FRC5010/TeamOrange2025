@@ -16,6 +16,8 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.networktables.StructArrayPublisher;
 import edu.wpi.first.wpilibj.Alert;
 import edu.wpi.first.wpilibj.Alert.AlertType;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -41,6 +43,7 @@ import org.frc5010.common.drive.pose.DrivePoseEstimator;
 import org.frc5010.common.sensors.Controller;
 import org.frc5010.common.telemetry.DisplayBoolean;
 import org.ironmaple.simulation.SimulatedArena;
+import org.littletonrobotics.junction.Logger;
 import org.littletonrobotics.junction.mechanism.LoggedMechanism2d;
 import org.littletonrobotics.junction.mechanism.LoggedMechanismLigament2d;
 import org.littletonrobotics.junction.mechanism.LoggedMechanismRoot2d;
@@ -77,6 +80,7 @@ public abstract class GenericDrivetrain extends GenericSubsystem {
   protected double previousLeftXInput = 0.0, previousLeftYInput = 0.0, previousRightXInput = 0.0;
   protected Alert canErrorAlert = new Alert("CAN Tx/Rx is being FLAKY!", AlertType.kError);
   protected Alert robotPositionAlert = new Alert("Robot position is off field", AlertType.kError);
+
   /**
    * Constructor
    *
@@ -240,8 +244,14 @@ public abstract class GenericDrivetrain extends GenericSubsystem {
     }
   }
 
+  StructArrayPublisher<Pose3d> gamePiecePoses =
+      NetworkTableInstance.getDefault()
+          .getStructArrayTopic("GamePieceSim", Pose3d.struct)
+          .publish();
+
   @Override
   public void simulationPeriodic() {
+    SimulatedArena.getInstance().simulationPeriodic();
     int count = 0;
     List<Pose3d> gpas =
         SimulatedArena.getInstance().getGamePiecesByType(Constants.Simulation.gamePieceA);
@@ -250,6 +260,10 @@ public abstract class GenericDrivetrain extends GenericSubsystem {
           .getObject("GPA" + count++)
           .setPose(new Pose2d(gpa.getX(), gpa.getY(), gpa.getRotation().toRotation2d()));
     }
+    Pose3d[] gpaArray =
+        SimulatedArena.getInstance().getGamePiecesArrayByType(Constants.Simulation.gamePieceA);
+    Logger.recordOutput("FieldSim/GPA", gpaArray);
+    gamePiecePoses.accept(gpaArray);
     count = 0;
     List<Pose3d> gpbs =
         SimulatedArena.getInstance().getGamePiecesByType(Constants.Simulation.gamePieceB);
@@ -258,6 +272,10 @@ public abstract class GenericDrivetrain extends GenericSubsystem {
           .getObject("GPB" + count++)
           .setPose(new Pose2d(gpb.getX(), gpb.getY(), gpb.getRotation().toRotation2d()));
     }
+    Pose3d[] gpbArray =
+        SimulatedArena.getInstance().getGamePiecesArrayByType(Constants.Simulation.gamePieceB);
+    Logger.recordOutput("FieldSim/GPB", gpbArray);
+    gamePiecePoses.accept(gpbArray);
   }
 
   protected void initializeSimulation(GenericDrivetrainConstants constants) {

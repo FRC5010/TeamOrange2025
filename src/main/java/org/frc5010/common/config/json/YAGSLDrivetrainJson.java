@@ -42,12 +42,13 @@ public class YAGSLDrivetrainJson implements DrivetrainPropertiesJson {
   /** Starting pose of the robot */
   public Pose2dJson startingPose = new Pose2dJson();
 
+  @Override
   public void readDrivetrainConfiguration(GenericRobot robot, File baseDirectory)
       throws IOException {
     SwerveConstants swerveConstants = new SwerveConstants(robot.getDrivetrainConstants());
-    for (int i = 0; i < driveModules.length; i++) {
-      File moduleFile = new File(baseDirectory, "drive_modules/" + driveModules[i]);
-      String moduleName = driveModules[i].substring(0, driveModules[i].indexOf(".json"));
+    for (String driveModule : driveModules) {
+      File moduleFile = new File(baseDirectory, "drive_modules/" + driveModule);
+      String moduleName = driveModule.substring(0, driveModule.indexOf(".json"));
       assert moduleFile.exists();
       YAGSLDriveModuleJson module =
           new ObjectMapper().readValue(moduleFile, YAGSLDriveModuleJson.class);
