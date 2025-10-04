@@ -4,14 +4,17 @@
 
 package org.frc5010.lobbinloco;
 
-import org.ironmaple.simulation.SimulatedArena;
+import static edu.wpi.first.units.Units.Inches;
+import static edu.wpi.first.units.Units.Kilograms;
+import static edu.wpi.first.units.Units.Meters;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.units.Units;
-import static edu.wpi.first.units.Units.Inches;
-import static edu.wpi.first.units.Units.Meters;
+import org.dyn4j.geometry.Circle;
+import org.ironmaple.simulation.SimulatedArena;
+import org.ironmaple.simulation.gamepieces.GamePieceOnFieldSimulation.GamePieceInfo;
 
 /** Add your docs here. */
 public class LobbinLoco extends SimulatedArena {
@@ -21,14 +24,27 @@ public class LobbinLoco extends SimulatedArena {
   public static final double GOAL_LENGTH = Inches.of(36).in(Meters);
   public static final double GOAL_WIDTH = Inches.of(36).in(Meters);
   public static final double GOAL_HEIGHT = Inches.of(8).in(Meters);
+  public static final double BALL_HEIGHT = Inches.of(5).in(Meters);
 
   // Dimensions in meters (50 feet x 20 feet)
   private static final Translation2d bottomLeft = new Translation2d(0.0, 0.0);
   private static final Translation2d bottomRight = new Translation2d(FIELD_LENGTH, 0);
-  private static final Translation2d bottomRightOverall = new Translation2d(FIELD_OVERALL_LENGTH, 0);
+  private static final Translation2d bottomRightOverall =
+      new Translation2d(FIELD_OVERALL_LENGTH, 0);
   private static final Translation2d topLeft = new Translation2d(0.0, FIELD_WIDTH);
   private static final Translation2d topRight = new Translation2d(FIELD_LENGTH, FIELD_WIDTH);
-  private static final Translation2d topRightOverall = new Translation2d(FIELD_OVERALL_LENGTH, FIELD_WIDTH);
+  private static final Translation2d topRightOverall =
+      new Translation2d(FIELD_OVERALL_LENGTH, FIELD_WIDTH);
+
+  public static final GamePieceInfo LOBBINLOCO_BALL_INFO =
+      new GamePieceInfo(
+          "FRC5010Ball",
+          new Circle(Inches.of(5).in(Meters)),
+          Inches.of(5),
+          Kilograms.of(0.1),
+          1.8,
+          5,
+          0.8);
 
   private static class LobbinLoboFieldMap extends FieldMap {
     public LobbinLoboFieldMap() {
@@ -36,7 +52,7 @@ public class LobbinLoco extends SimulatedArena {
       addBorderLine(bottomRight, bottomRightOverall); // __
       addBorderLine(bottomRight, topRight); // _|_
       addBorderLine(bottomRightOverall, topRightOverall); // _|_|
-      addBorderLine(topRight, topRightOverall); // 
+      addBorderLine(topRight, topRightOverall); //
       addBorderLine(topRight, topLeft);
       addBorderLine(topLeft, bottomLeft);
 

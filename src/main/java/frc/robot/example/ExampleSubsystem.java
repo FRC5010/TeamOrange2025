@@ -27,6 +27,7 @@ import org.frc5010.common.motors.function.PercentControlMotor;
 import org.frc5010.common.motors.function.VelocityControlMotor;
 import org.frc5010.common.motors.function.VerticalPositionControlMotor;
 import org.frc5010.common.sensors.absolute_encoder.RevAbsoluteEncoder;
+import org.frc5010.lobbinloco.FRC5010BallOnTheFly;
 import org.ironmaple.simulation.IntakeSimulation;
 import org.ironmaple.simulation.IntakeSimulation.IntakeSide;
 import org.ironmaple.simulation.SimulatedArena;
@@ -55,7 +56,7 @@ public class ExampleSubsystem extends GenericSubsystem {
     // verticalMotor = verticalControlledMotor();
     intakeSimulation =
         IntakeSimulation.InTheFrameIntake(
-            "Algae",
+            "FRC5010Ball",
             YAGSLSwerveDrivetrain.getSwerveDrive().getMapleSimDrive().get(),
             Inches.of(24.25),
             IntakeSide.FRONT,
@@ -173,17 +174,17 @@ public class ExampleSubsystem extends GenericSubsystem {
         });
   }
 
-  public Command addAlgaeToRobot() {
+  public Command addBallToRobot() {
     return Commands.runOnce(() -> intakeSimulation.addGamePieceToIntake());
   }
 
-  public Command launchAlgae() {
+  public Command launchBall() {
     return Commands.runOnce(
         () -> {
           if (RobotBase.isSimulation()) {
             Pose2d worldPose = YAGSLSwerveDrivetrain.getSwerveDrive().getPose();
             gamePieceProjectile =
-                new ReefscapeAlgaeOnFly(
+                new FRC5010BallOnTheFly(
                         worldPose.getTranslation(),
                         controlledMotor.getRobotToMotor().getTranslation().toTranslation2d(),
                         YAGSLSwerveDrivetrain.getSwerveDrive().getFieldVelocity(),
@@ -194,7 +195,7 @@ public class ExampleSubsystem extends GenericSubsystem {
                     .withProjectileTrajectoryDisplayCallBack(
                         (pose3ds) -> {
                           Logger.recordOutput(
-                              logPrefix + "/AlgaeTrajectory", pose3ds.toArray(Pose3d[]::new));
+                              logPrefix + "/GPTrajectory", pose3ds.toArray(Pose3d[]::new));
                         });
             SimulatedArena.getInstance().addGamePieceProjectile(gamePieceProjectile);
           }

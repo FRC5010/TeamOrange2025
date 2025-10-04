@@ -15,6 +15,7 @@ import java.util.Map;
 import org.frc5010.common.arch.GenericRobot;
 import org.frc5010.common.vision.AprilTags;
 import org.ironmaple.simulation.SimulatedArena;
+import org.ironmaple.simulation.gamepieces.GamePieceOnFieldSimulation;
 
 /** JSON class with an array of cameras to configure */
 public class VisionPropertiesJson {
@@ -23,6 +24,7 @@ public class VisionPropertiesJson {
 
   public String aprilTagLayout = "default";
   public String simulatedField = "default";
+  public Map<String, String[]> gamePieces = new HashMap<>();
 
   /**
    * Creates cameras for a given robot using the provided map of camera configurations.
@@ -53,6 +55,16 @@ public class VisionPropertiesJson {
                 .asSubclass(SimulatedArena.class)
                 .getDeclaredConstructor()
                 .newInstance();
+        if (!gamePieces.isEmpty()) {
+          arena.clearGamePieces();
+          for (String key : gamePieces.keySet()) {
+            arena.addGamePiece(
+                Class.forName(gamePieces.get(key)[0])
+                    .asSubclass(GamePieceOnFieldSimulation.class)
+                    .getDeclaredConstructor()
+                    .newInstance());
+          }
+        }
         SimulatedArena.overrideInstance(arena);
       } catch (ClassNotFoundException
           | NoSuchMethodException

@@ -29,8 +29,8 @@ public class ExampleRobot extends GenericRobot {
 
   @Override
   public void configureButtonBindings(Controller driver, Controller operator) {
-    driver.createAButton().onTrue(exampleSubsystem.addAlgaeToRobot());
-    driver.createBButton().onTrue(exampleSubsystem.launchAlgae());
+    driver.createAButton().onTrue(exampleSubsystem.addBallToRobot());
+    driver.createBButton().onTrue(exampleSubsystem.launchBall());
     // driver.createYButton().onTrue(exampleSubsystem.setVelocityControlMotorReference(() -> 3500))
     //     .onFalse(exampleSubsystem.setVelocityControlMotorReference(() -> 0));
     // driver.createXButton().onTrue(exampleSubsystem.setVelocityControlMotorReference(() -> 2000))
