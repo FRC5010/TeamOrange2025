@@ -2,7 +2,7 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot;
+package frc.robot.example;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
@@ -29,6 +29,8 @@ public class ExampleRobot extends GenericRobot {
 
   @Override
   public void configureButtonBindings(Controller driver, Controller operator) {
+    driver.createAButton().onTrue(exampleSubsystem.addBallToRobot());
+    driver.createBButton().onTrue(exampleSubsystem.launchBall());
     // driver.createYButton().onTrue(exampleSubsystem.setVelocityControlMotorReference(() -> 3500))
     //     .onFalse(exampleSubsystem.setVelocityControlMotorReference(() -> 0));
     // driver.createXButton().onTrue(exampleSubsystem.setVelocityControlMotorReference(() -> 2000))

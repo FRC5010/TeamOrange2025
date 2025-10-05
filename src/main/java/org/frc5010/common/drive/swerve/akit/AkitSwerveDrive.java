@@ -175,7 +175,7 @@ public class AkitSwerveDrive extends SwerveDriveFunctions {
     }
 
     // Update gyro alert
-    gyroDisconnectedAlert.set(!gyroInputs.connected && Constants.currentMode != Mode.SIM);
+    gyroDisconnectedAlert.set(!gyroInputs.connected && Constants.CURRENT_MODE != Mode.SIM);
   }
 
   /**
