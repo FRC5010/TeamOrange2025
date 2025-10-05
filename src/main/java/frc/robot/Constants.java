@@ -4,10 +4,7 @@
 
 package frc.robot;
 
-import edu.wpi.first.math.geometry.Translation3d;
-import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.RobotBase;
-import swervelib.math.Matter;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
@@ -19,11 +16,11 @@ import swervelib.math.Matter;
  */
 public final class Constants {
   /**** The simulation mode to run - Uncomment the one you want to use *****/
-  public static final Mode simMode = Mode.SIM; // This is for running the Glass Simulator
+  public static final Mode SIM_MODE = Mode.SIM; // This is for running the Glass Simulator
   // Mode.REPLAY; // This is for replaying from a log in Advantage Scope
   /**** ------------------------------------------------------------- *****/
 
-  public static final Mode currentMode = RobotBase.isReal() ? Mode.REAL : simMode;
+  public static final Mode CURRENT_MODE = RobotBase.isReal() ? Mode.REAL : SIM_MODE;
 
   public static enum Mode {
     /** Running on a real robot. */
@@ -35,20 +32,6 @@ public final class Constants {
     /** Replaying from a log file. */
     REPLAY
   }
-
-  public static final double ROBOT_MASS = (148 - 20.3) * 0.453592; // 32lbs * kg per pound
-  public static final Matter CHASSIS =
-      new Matter(new Translation3d(0, 0, Units.inchesToMeters(8)), ROBOT_MASS);
-  public static final double LOOP_TIME = 0.13; // s, 20ms + 110ms sprk max velocity lag
-  public static final double MAX_SPEED = Units.feetToMeters(3);
-  // Maximum speed of the robot in meters per second, used to limit acceleration.
-
-  //  public static final class AutonConstants
-  //  {
-  //
-  //    public static final PIDConstants TRANSLATION_PID = new PIDConstants(0.7, 0, 0);
-  //    public static final PIDConstants ANGLE_PID       = new PIDConstants(0.4, 0, 0.01);
-  //  }
 
   public static final class DrivebaseConstants {
 
