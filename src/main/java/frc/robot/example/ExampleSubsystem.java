@@ -1,7 +1,9 @@
-package frc.robot;
+package frc.robot.example;
 
 import static edu.wpi.first.units.Units.Degrees;
 import static edu.wpi.first.units.Units.Inches;
+import static edu.wpi.first.units.Units.Meters;
+import static edu.wpi.first.units.Units.MetersPerSecond;
 
 import com.revrobotics.spark.SparkMax;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -25,8 +27,14 @@ import org.frc5010.common.motors.function.PercentControlMotor;
 import org.frc5010.common.motors.function.VelocityControlMotor;
 import org.frc5010.common.motors.function.VerticalPositionControlMotor;
 import org.frc5010.common.sensors.absolute_encoder.RevAbsoluteEncoder;
+import org.frc5010.lobbinloco.FRC5010BallOnTheFly;
 import org.ironmaple.simulation.IntakeSimulation;
+import org.ironmaple.simulation.IntakeSimulation.IntakeSide;
+import org.ironmaple.simulation.SimulatedArena;
+import org.ironmaple.simulation.gamepieces.GamePieceProjectile;
 import org.ironmaple.simulation.seasonspecific.crescendo2024.NoteOnFly;
+import org.ironmaple.simulation.seasonspecific.reefscape2025.ReefscapeAlgaeOnFly;
+import org.littletonrobotics.junction.Logger;
 
 public class ExampleSubsystem extends GenericSubsystem {
   protected PercentControlMotor motor;
@@ -35,6 +43,7 @@ public class ExampleSubsystem extends GenericSubsystem {
   protected VerticalPositionControlMotor verticalMotor;
   protected IntakeSimulation intakeSimulation;
   protected NoteOnFly noteOnFly;
+  protected GamePieceProjectile gamePieceProjectile;
   protected int scoredNotes = 0;
   protected Rotation2d rotation = new Rotation2d(Degrees.of(180));
 
@@ -45,13 +54,13 @@ public class ExampleSubsystem extends GenericSubsystem {
 
     this.angularMotor = angularControlledMotor();
     // verticalMotor = verticalControlledMotor();
-    // intakeSimulation =
-    //     IntakeSimulation.InTheFrameIntake(
-    //         "Coral",
-    //         YAGSLSwerveDrivetrain.getSwerveDrive().getMapleSimDrive().get(),
-    //         Inches.of(24.25),
-    //         IntakeSide.FRONT,
-    //         1);
+    intakeSimulation =
+        IntakeSimulation.InTheFrameIntake(
+            "FRC5010Ball",
+            YAGSLSwerveDrivetrain.getSwerveDrive().getMapleSimDrive().get(),
+            Inches.of(24.25),
+            IntakeSide.FRONT,
+            1);
   }
 
   public AngularControlMotor angularControlledMotor() {
@@ -108,22 +117,16 @@ public class ExampleSubsystem extends GenericSubsystem {
             controlledMotor.setReference(speed);
             if (RobotBase.isSimulation()) {
               Pose2d worldPose = YAGSLSwerveDrivetrain.getSwerveDrive().getPose();
-
-              // noteOnFly = new NoteOnFly(
-              //         worldPose.getTranslation(),
-              //         controlledMotor.getRobotToMotor().getTranslation().toTranslation2d(),
-              //         YAGSLSwerveDrivetrain.getSwerveDrive().getFieldVelocity(),
-              //         worldPose.getRotation().rotateBy(rotation),
-              //         0.45,
-              //         speed / 6000 * 20,
-              //         Math.toRadians(55));
-              // noteOnFly.enableBecomeNoteOnFieldAfterTouchGround();
-              // noteOnFly.asSpeakerShotNote(() -> {
-              //     if (noteOnFly.hasHitTarget()) {
-              //         SmartDashboard.putNumber("Notes Speaker", ++scoredNotes);
-              //     }
-              // });
-              // SimulatedArena.getInstance().addGamePieceProjectile(noteOnFly);
+              gamePieceProjectile =
+                  new ReefscapeAlgaeOnFly(
+                      worldPose.getTranslation(),
+                      controlledMotor.getRobotToMotor().getTranslation().toTranslation2d(),
+                      YAGSLSwerveDrivetrain.getSwerveDrive().getFieldVelocity(),
+                      worldPose.getRotation(),
+                      Meters.of(0.45),
+                      MetersPerSecond.of(speed / 6000 * 20),
+                      Degrees.of(55));
+              SimulatedArena.getInstance().addGamePieceProjectile(gamePieceProjectile);
             }
           } else if (speed < 3000
               && speed > 1000
@@ -132,21 +135,16 @@ public class ExampleSubsystem extends GenericSubsystem {
             controlledMotor.setReference(speed);
             if (RobotBase.isSimulation()) {
               Pose2d worldPose = YAGSLSwerveDrivetrain.getSwerveDrive().getPose();
-              // noteOnFly = new NoteOnFly(
-              //         worldPose.getTranslation(),
-              //         controlledMotor.getRobotToMotor().getTranslation().toTranslation2d(),
-              //         YAGSLSwerveDrivetrain.getSwerveDrive().getFieldVelocity(),
-              //         worldPose.getRotation().rotateBy(rotation),
-              //         Meters.of(0.45),
-              //         speed / 6000 * 20,
-              //         Math.toRadians(55));
-              // noteOnFly.enableBecomeNoteOnFieldAfterTouchGround();
-              // noteOnFly.asAmpShotNote(() -> {
-              //     if (noteOnFly.hasHitTarget()) {
-              //         SmartDashboard.putNumber("Notes Amp", ++scoredNotes);
-              //     }
-              // });
-              // SimulatedArena.getInstance().addGamePieceProjectile(noteOnFly);
+              gamePieceProjectile =
+                  new ReefscapeAlgaeOnFly(
+                      worldPose.getTranslation(),
+                      controlledMotor.getRobotToMotor().getTranslation().toTranslation2d(),
+                      YAGSLSwerveDrivetrain.getSwerveDrive().getFieldVelocity(),
+                      worldPose.getRotation(),
+                      Meters.of(0.45),
+                      MetersPerSecond.of(speed / 6000 * 20),
+                      Degrees.of(55));
+              SimulatedArena.getInstance().addGamePieceProjectile(gamePieceProjectile);
             }
           } else {
             controlledMotor.setReference(speed);
@@ -173,6 +171,34 @@ public class ExampleSubsystem extends GenericSubsystem {
     return new Trigger(
         () -> {
           return RobotBase.isSimulation() ? intakeSimulation.getGamePiecesAmount() > 0 : false;
+        });
+  }
+
+  public Command addBallToRobot() {
+    return Commands.runOnce(() -> intakeSimulation.addGamePieceToIntake());
+  }
+
+  public Command launchBall() {
+    return Commands.runOnce(
+        () -> {
+          if (RobotBase.isSimulation()) {
+            Pose2d worldPose = YAGSLSwerveDrivetrain.getSwerveDrive().getPose();
+            gamePieceProjectile =
+                new FRC5010BallOnTheFly(
+                        worldPose.getTranslation(),
+                        controlledMotor.getRobotToMotor().getTranslation().toTranslation2d(),
+                        YAGSLSwerveDrivetrain.getSwerveDrive().getFieldVelocity(),
+                        worldPose.getRotation(),
+                        Meters.of(0.45),
+                        MetersPerSecond.of(10),
+                        Degrees.of(55))
+                    .withProjectileTrajectoryDisplayCallBack(
+                        (pose3ds) -> {
+                          Logger.recordOutput(
+                              logPrefix + "/GPTrajectory", pose3ds.toArray(Pose3d[]::new));
+                        });
+            SimulatedArena.getInstance().addGamePieceProjectile(gamePieceProjectile);
+          }
         });
   }
 

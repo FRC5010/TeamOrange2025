@@ -6,7 +6,12 @@ import com.ctre.phoenix6.BaseStatusSignal;
 import com.ctre.phoenix6.StatusSignal;
 import com.ctre.phoenix6.configs.CANcoderConfiguration;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
-import com.ctre.phoenix6.controls.*;
+import com.ctre.phoenix6.controls.PositionTorqueCurrentFOC;
+import com.ctre.phoenix6.controls.PositionVoltage;
+import com.ctre.phoenix6.controls.TorqueCurrentFOC;
+import com.ctre.phoenix6.controls.VelocityTorqueCurrentFOC;
+import com.ctre.phoenix6.controls.VelocityVoltage;
+import com.ctre.phoenix6.controls.VoltageOut;
 import com.ctre.phoenix6.hardware.CANcoder;
 import com.ctre.phoenix6.hardware.ParentDevice;
 import com.ctre.phoenix6.hardware.TalonFX;
@@ -90,7 +95,7 @@ public abstract class ModuleIOTalonFX implements ModuleIO {
     var turnConfig = new TalonFXConfiguration();
     turnConfig.MotorOutput.NeutralMode = NeutralModeValue.Brake;
     turnConfig.Slot0 = constants.SteerMotorGains;
-    if (Constants.currentMode == Constants.Mode.SIM)
+    if (Constants.CURRENT_MODE == Constants.Mode.SIM)
       turnConfig.Slot0.withKD(0.5).withKS(0); // during simulation, gains are slightly different
 
     turnConfig.Feedback.FeedbackRemoteSensorID = constants.EncoderId;
