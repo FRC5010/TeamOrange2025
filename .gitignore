@@ -181,5 +181,4 @@ ctre_sim/
 # clangd
 /.cache
 compile_commands.json
-src/main/java/frc/robot/BuildConstants.java
 networktables.json.bck
