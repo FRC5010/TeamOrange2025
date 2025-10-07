@@ -4,11 +4,17 @@
     "basic_robot": {
       "id": "basic_robot",
       "robotClass": "frc.robot.example.ExampleRobot",
-      "simulate": true
+      "simulate": false
     },
-    "black_robot": {
-      "id": "black_robot",
-      "robotClass": "frc.robot.blackteam.BlackRobot",
+    "baby_swerve": {
+      "id": "baby_swerve",
+      "robotClass": "frc.robot.baby_swerve.BabySwerve",
+      "simulate": false,
+      "competition": false
+    },
+    "buttercup_swerve": {
+      "id": "buttercup",
+      "robotClass": "frc.robot.OrangeTeam.Buttercup",
       "simulate": true,
       "competition": true
     }
