@@ -14,10 +14,12 @@ import org.frc5010.common.sensors.Controller;
 /** Add your docs here. */
 public class Buttercup extends GenericRobot {
   private GenericDrivetrain drivetrain;
+  private ShooterSubsystem shooterSubsystem;
 
   public Buttercup(String directory) {
     super(directory);
     drivetrain = (GenericDrivetrain) subsystems.get(ConfigConstants.DRIVETRAIN);
+    shooterSubsystem = new ShooterSubsystem();
   }
 
   @Override
@@ -44,5 +46,7 @@ public class Buttercup extends GenericRobot {
   }
 
   @Override
-  public void configureButtonBindings(Controller driver, Controller operator) {}
+  public void configureButtonBindings(Controller driver, Controller operator) {
+    driver.createAButton().onTrue(shooterSubsystem.setSpeed(0.5));
+  }
 }
