@@ -94,6 +94,13 @@ public class DeviceConfigReader {
             yamsTurretConfigurationJson.motorSetup.name,
             yamsTurretConfigurationJson.configure(system));
         break;
+      case "yams_shooter":
+        YamsShooterConfigurationJson yamsShooterConfigurationJson =
+            new ObjectMapper().readValue(deviceFile, YamsShooterConfigurationJson.class);
+        system.addDevice(
+            yamsShooterConfigurationJson.motorSetup.name,
+            yamsShooterConfigurationJson.configure(system));
+        break;
       default:
         break;
     }

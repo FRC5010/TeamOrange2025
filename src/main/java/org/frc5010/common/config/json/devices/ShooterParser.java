@@ -9,27 +9,26 @@ import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import java.io.File;
 import java.io.IOException;
-import yams.mechanisms.positional.Elevator;
+import yams.mechanisms.velocity.Shooter;
 
 /** Add your docs here. */
-public class ElevatorParser {
+public class ShooterParser {
   /**
-   * Parses an elevator configuration from the specified JSON file and configures the elevator
-   * subsystem.
+   * Reads a device configuration from the given file and adds it to the system.
    *
-   * @param subDirectory the subdirectory containing the configuration file
-   * @param filename the name of the configuration file
-   * @param system the subsystem to configure
-   * @return the configured Elevator instance, or null if an error occurs
+   * @param subDirectory the subdirectory containing the device configuration file
+   * @param filename the name of the device configuration file
+   * @param system the system to add the device to
+   * @return the configured pivot, or null if there was an error
    */
-  public static Elevator parse(String subDirectory, String filename, SubsystemBase system) {
+  public static Shooter parse(String subDirectory, String filename, SubsystemBase system) {
     try {
       File directory = new File(Filesystem.getDeployDirectory(), subDirectory);
       DeviceConfigReader.checkDirectory(directory);
       File deviceFile = new File(directory, filename);
-      YamsElevatorConfigurationJson yamsElevatorConfigurationJson =
-          new ObjectMapper().readValue(deviceFile, YamsElevatorConfigurationJson.class);
-      return yamsElevatorConfigurationJson.configure(system);
+      YamsShooterConfigurationJson yamsShooterConfigurationJson =
+          new ObjectMapper().readValue(deviceFile, YamsShooterConfigurationJson.class);
+      return yamsShooterConfigurationJson.configure(system);
     } catch (IOException e) {
       System.out.println("Error reading device configuration: " + e.getMessage());
       return null;
