@@ -14,12 +14,17 @@ import static edu.wpi.first.units.Units.Seconds;
 import static yams.mechanisms.SmartMechanism.gearbox;
 import static yams.mechanisms.SmartMechanism.gearing;
 
+import java.util.Map;
+import java.util.function.DoubleSupplier;
+
+import org.frc5010.common.arch.GenericSubsystem;
+
 import com.thethriftybot.ThriftyNova;
+
 import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.interpolation.InterpolatingDoubleTreeMap;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.wpilibj2.command.Command;
-import org.frc5010.common.arch.GenericSubsystem;
 import yams.mechanisms.config.ShooterConfig;
 import yams.mechanisms.velocity.Shooter;
 import yams.motorcontrollers.SmartMotorController;
@@ -31,7 +36,13 @@ import yams.motorcontrollers.local.NovaWrapper;
 
 public class ShooterSubsystem extends GenericSubsystem {
   private final ThriftyNova motor = new ThriftyNova(10);
-  private InterpolatingDoubleTreeMap distanceToVelocityMap = new InterpolatingDoubleTreeMap();
+  private InterpolatingDoubleTreeMap distanceToVelocityMap = InterpolatingDoubleTreeMap.ofEntries(
+    Map.entry(0.0, 0.0),
+    Map.entry(0.5, 500.0),
+    Map.entry(1.0, 1000.0),
+    Map.entry(1.5, 1500.0)
+    
+  );
   private final SmartMotorControllerConfig motorConfig =
       new SmartMotorControllerConfig(this)
           .withClosedLoopController(
@@ -59,12 +70,16 @@ public class ShooterSubsystem extends GenericSubsystem {
 
   /** Creates a new Shooter. */
   public ShooterSubsystem() {
-    distanceToVelocityMap.put(0.0, 0.0);
-    distanceToVelocityMap.put(0.5, 500.0);
   }
 
   public Command setSpeed(double speed) {
     return shooter.set(speed);
+  }
+
+  public Command launchToDistance(DoubleSupplier distanceSupplier) {
+    return shooter.setSpeed(
+      ()-> RPM.of(
+        distanceToVelocityMap.get(distanceSupplier.getAsDouble())));
   }
 
   @Override
