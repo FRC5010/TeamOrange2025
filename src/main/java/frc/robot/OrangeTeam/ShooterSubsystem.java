@@ -35,6 +35,13 @@ import yams.motorcontrollers.SmartMotorControllerConfig.TelemetryVerbosity;
 import yams.motorcontrollers.local.NovaWrapper;
 
 public class ShooterSubsystem extends GenericSubsystem {
+  private InterpolatingDoubleTreeMap distanceToVelocityMap = 
+    InterpolatingDoubleTreeMap.ofEntries(
+      Map.entry(0.0, 0.0), 
+      Map.entry(0.5, 500.0), 
+      Map.entry(1.0, 1000.0), 
+      Map.entry(1.5, 1500.0)
+    );
   private final ThriftyNova motor = new ThriftyNova(10);
   private InterpolatingDoubleTreeMap distanceToVelocityMap = InterpolatingDoubleTreeMap.ofEntries(
     Map.entry(0.0, 0.0),
@@ -70,10 +77,32 @@ public class ShooterSubsystem extends GenericSubsystem {
 
   /** Creates a new Shooter. */
   public ShooterSubsystem() {
+<<<<<<< Updated upstream
   }
+=======
+    distanceToVelocityMap.put(0.0, 0.0);
+    distanceToVelocityMap.put(0.5, 500.0);
+    // TODO: Add more distance to velocities once we determine them.
+  }
+
+>>>>>>> Stashed changes
 
   public Command setSpeed(double speed) {
     return shooter.set(speed);
+  }
+  
+  public Command launchToDistance(DoubleSupplier distanceSupplier) {
+    return shooter.setSpeed(
+      () -> RPM.of(
+        distanceToVelocityMap.get(
+          distanceSupplier.getAsDouble())));
+  }
+
+  /** Command shooter to run at a praticular speed */
+  // use to get experimental data for distanceToVelocityMap
+
+  public Command spinAtSpeed(Doublesupplier speedsupplier) {
+    return shooter.setSpeed(RPM.of(speedSupplier.getAsDouble()));
   }
 
   public Command launchToDistance(DoubleSupplier distanceSupplier) {
