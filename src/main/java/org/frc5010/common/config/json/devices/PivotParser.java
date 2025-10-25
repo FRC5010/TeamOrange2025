@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import java.io.File;
+import java.io.IOException;
 import yams.mechanisms.positional.Pivot;
 
 /** Add your docs here. */
@@ -28,9 +29,8 @@ public class PivotParser {
       YamsPivotConfigurationJson yamsPivotConfigurationJson =
           new ObjectMapper().readValue(deviceFile, YamsPivotConfigurationJson.class);
       return yamsPivotConfigurationJson.configure(system);
-    } catch (Exception e) {
+    } catch (IOException e) {
       System.out.println("Error reading device configuration: " + e.getMessage());
-      e.printStackTrace();
       return null;
     }
   }

@@ -4,14 +4,18 @@
 
 package frc.robot.example;
 
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Commands;
 import org.frc5010.common.arch.GenericRobot;
+import org.frc5010.common.arch.StateMachine;
+import org.frc5010.common.arch.StateMachine.State;
 import org.frc5010.common.config.ConfigConstants;
 import org.frc5010.common.constants.SwerveConstants;
 import org.frc5010.common.drive.GenericDrivetrain;
 import org.frc5010.common.motors.function.PercentControlMotor;
 import org.frc5010.common.sensors.Controller;
+
+import static edu.wpi.first.units.Units.RPM;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 
 /** This is an example robot class. */
 public class ExampleRobot extends GenericRobot {
@@ -20,6 +24,7 @@ public class ExampleRobot extends GenericRobot {
   PercentControlMotor percentControlMotor;
   DisplayValueSubsystem displayValueSubsystem = new DisplayValueSubsystem();
   ExampleSubsystem exampleSubsystem;
+  StateMachine stateMachine = new StateMachine("ExampleStateMachine");
 
   public ExampleRobot(String directory) {
     super(directory);
@@ -31,6 +36,20 @@ public class ExampleRobot extends GenericRobot {
   public void configureButtonBindings(Controller driver, Controller operator) {
     driver.createAButton().onTrue(exampleSubsystem.addBallToRobot());
     driver.createBButton().onTrue(exampleSubsystem.launchBall());
+    driver.createXButton().whileTrue(exampleSubsystem.setDutyCycle(0.5));
+    driver.createYButton().onTrue(exampleSubsystem.sysIdShooter());
+
+
+    State idle = stateMachine.addState("idle", Commands.idle());
+    stateMachine.setInitialState(idle);
+    State prepping = stateMachine.addState("running", exampleSubsystem.setVelocity(RPM.of(3000)));
+    idle.switchTo(prepping).when(driver.RIGHT_BUMPER);
+
+    State launching = stateMachine.addState("launching", exampleSubsystem.launchBall());
+    prepping.switchTo(launching).when(() -> exampleSubsystem.getVelocity() == RPM.of(3000));
+    launching.switchTo(idle).when(() -> !driver.RIGHT_BUMPER.getAsBoolean());
+    prepping.switchTo(idle).when(() -> !driver.RIGHT_BUMPER.getAsBoolean());
+
     // driver.createYButton().onTrue(exampleSubsystem.setVelocityControlMotorReference(() -> 3500))
     //     .onFalse(exampleSubsystem.setVelocityControlMotorReference(() -> 0));
     // driver.createXButton().onTrue(exampleSubsystem.setVelocityControlMotorReference(() -> 2000))

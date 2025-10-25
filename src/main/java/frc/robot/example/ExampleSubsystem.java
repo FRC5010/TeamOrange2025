@@ -1,27 +1,15 @@
 package frc.robot.example;
 
-import static edu.wpi.first.units.Units.Degrees;
-import static edu.wpi.first.units.Units.Inches;
-import static edu.wpi.first.units.Units.Meters;
-import static edu.wpi.first.units.Units.MetersPerSecond;
-
-import com.revrobotics.spark.SparkMax;
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Pose3d;
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Rotation3d;
-import edu.wpi.first.math.util.Units;
-import edu.wpi.first.wpilibj.RobotBase;
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Commands;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
 import java.util.function.DoubleSupplier;
+import java.util.function.Supplier;
+
 import org.frc5010.common.arch.GenericSubsystem;
 import org.frc5010.common.constants.GenericPID;
 import org.frc5010.common.constants.MotorFeedFwdConstants;
 import org.frc5010.common.drive.swerve.YAGSLSwerveDrivetrain;
 import org.frc5010.common.motors.MotorConstants.Motor;
 import org.frc5010.common.motors.MotorFactory;
+import org.frc5010.common.motors.SystemIdentification;
 import org.frc5010.common.motors.function.AngularControlMotor;
 import org.frc5010.common.motors.function.PercentControlMotor;
 import org.frc5010.common.motors.function.VelocityControlMotor;
@@ -36,6 +24,24 @@ import org.ironmaple.simulation.seasonspecific.crescendo2024.NoteOnFly;
 import org.ironmaple.simulation.seasonspecific.reefscape2025.ReefscapeAlgaeOnFly;
 import org.littletonrobotics.junction.Logger;
 
+import com.revrobotics.spark.SparkMax;
+
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Pose3d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Rotation3d;
+import edu.wpi.first.math.util.Units;
+import static edu.wpi.first.units.Units.Degrees;
+import static edu.wpi.first.units.Units.Inches;
+import static edu.wpi.first.units.Units.Meters;
+import static edu.wpi.first.units.Units.MetersPerSecond;
+import edu.wpi.first.units.measure.AngularVelocity;
+import edu.wpi.first.wpilibj.RobotBase;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
+import yams.mechanisms.velocity.Shooter;
+
 public class ExampleSubsystem extends GenericSubsystem {
   protected PercentControlMotor motor;
   protected VelocityControlMotor controlledMotor;
@@ -46,11 +52,13 @@ public class ExampleSubsystem extends GenericSubsystem {
   protected GamePieceProjectile gamePieceProjectile;
   protected int scoredNotes = 0;
   protected Rotation2d rotation = new Rotation2d(Degrees.of(180));
+  protected Shooter shooter;
 
   public ExampleSubsystem() {
     super("example.json");
     this.motor = (PercentControlMotor) devices.get("percent_motor");
     this.controlledMotor = (VelocityControlMotor) devices.get("velocity_motor");
+    this.shooter = (Shooter) devices.get("Shooter");
 
     this.angularMotor = angularControlledMotor();
     // verticalMotor = verticalControlledMotor();
@@ -91,6 +99,26 @@ public class ExampleSubsystem extends GenericSubsystem {
     return Commands.run(() -> motor.set(speed.getAsDouble()), this);
   }
 
+  public AngularVelocity getVelocity() {
+    return shooter.getSpeed();
+  }
+
+  public Command setVelocity(AngularVelocity speed) {
+    return shooter.setSpeed(speed);
+  }
+
+  public Command setDutyCycle(double dutyCycle) {
+    return shooter.set(dutyCycle);
+  }
+
+  public Command setVelocity(Supplier<AngularVelocity> speed) {
+    return shooter.setSpeed(speed);
+  }
+
+  public Command setDutyCycle(Supplier<Double> dutyCycle) {
+    return shooter.set(dutyCycle);
+  }
+
   public Command setPercentControlMotorReference(DoubleSupplier reference) {
     return Commands.runOnce(
         () -> {
@@ -103,6 +131,11 @@ public class ExampleSubsystem extends GenericSubsystem {
           motor.set(speed);
         },
         this);
+  }
+
+  public Command sysIdShooter() {
+    return SystemIdentification.getSysIdFullCommand(
+        SystemIdentification.rpmSysIdRoutine(shooter.getMotor(), logPrefix, this), 5, 3, 3);
   }
 
   public Command setVelocityControlMotorReference(DoubleSupplier reference) {
@@ -206,13 +239,13 @@ public class ExampleSubsystem extends GenericSubsystem {
   public void periodic() {
     super.periodic();
     angularMotor.periodicUpdate();
-    //        verticalMotor.draw();
+    // verticalMotor.draw();
   }
 
   @Override
   public void simulationPeriodic() {
     super.simulationPeriodic();
     angularMotor.simulationUpdate();
-    //      verticalMotor.simulationUpdate();
+    // verticalMotor.simulationUpdate();
   }
 }

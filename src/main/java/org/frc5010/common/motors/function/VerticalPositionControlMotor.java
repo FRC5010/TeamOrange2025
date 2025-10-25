@@ -48,7 +48,6 @@ public class VerticalPositionControlMotor extends GenericControlledMotor {
   Distance carriageHeight = Meters.of(0.0);
   Distance mechanismHeight = Meters.of(0.0);
   Distance minHeight = Meters.of(0.0);
-  Distance maximumHeight = Meters.of(0.0);
   Distance startingHeight = Meters.of(0.0);
   protected final String K_G = "kG";
   protected final String CONVERSION = "Conversion";
@@ -79,7 +78,6 @@ public class VerticalPositionControlMotor extends GenericControlledMotor {
       double kG) {
     this.carriageHeight = carriageHeight;
     this.minHeight = minHeight;
-    this.maximumHeight = maximumHeight;
     this.startingHeight = startingHeight;
     mechanismHeight = maximumHeight;
     simMechanism =
@@ -93,7 +91,7 @@ public class VerticalPositionControlMotor extends GenericControlledMotor {
             minHeight.in(Meters),
             maximumHeight.in(Meters),
             true,
-            startingHeight.in(Meters));
+            this.startingHeight.in(Meters));
     this.kG.setValue(0 == this.kG.getValue() ? kG : this.kG.getValue());
     this.conversionRotationsToDistance.setValue((drumRadius.in(Meters) * 2.0 * Math.PI) / gearing);
     double persistedConversion = this.conversionRotationsToDistance.getValue();
@@ -158,6 +156,7 @@ public class VerticalPositionControlMotor extends GenericControlledMotor {
     return isCloseToMax(Meters.of(0.01));
   }
 
+  @Override
   public GenericMotorController getMotorController() {
     return _motor;
   }
@@ -207,6 +206,7 @@ public class VerticalPositionControlMotor extends GenericControlledMotor {
     _motor.set(actual);
   }
 
+  @Override
   public double getEncoderFeedback() {
     if (RobotBase.isReal()) {
       return encoder.getPosition();
@@ -255,8 +255,7 @@ public class VerticalPositionControlMotor extends GenericControlledMotor {
   @Override
   public void periodicUpdate() {
     updateReference();
-    double currentPosition = 0;
-    currentPosition = getEncoderFeedback();
+    double currentPosition = getEncoderFeedback();
     setPointRoot.setPosition(
         getSimX(Meters.of(_robotToMotor.getX())) + setPointDisplayOffset,
         getSimY(Meters.of(_robotToMotor.getZ())) + getReference());

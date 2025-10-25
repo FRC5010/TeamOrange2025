@@ -6,8 +6,10 @@ package org.frc5010.common.config.json.devices;
 
 import edu.wpi.first.math.Pair;
 import org.frc5010.common.config.UnitsParser;
+import org.frc5010.common.config.json.Translation3dJson;
 import org.frc5010.common.config.json.UnitValueJson;
 import org.frc5010.common.motors.GenericMotorController;
+import yams.mechanisms.config.MechanismPositionConfig;
 import yams.motorcontrollers.SmartMotorControllerConfig;
 
 /** Add your docs here. */
@@ -27,6 +29,8 @@ public class MotorSetupJson {
   public UnitValueJson currentLimit = new UnitValueJson(40, UnitsParser.AMPS);
   public boolean inverted = false;
   public int numberOfMotors = 1;
+  public Translation3dJson robotToMotor = new Translation3dJson();
+  public String movementPlane = "XZ";
 
   /**
    * Configures the followers of the given SmartMotorControllerConfig with the followers from the
@@ -46,10 +50,15 @@ public class MotorSetupJson {
         GenericMotorController followerMotor =
             DeviceConfigReader.getMotor(
                 motorSetup.controllerType, motorSetup.motorType, motorSetupFollower.canId);
-        followers[i] =
-            new Pair<Object, Boolean>(followerMotor.getMotor(), motorSetupFollower.inverted);
+        followers[i] = new Pair<>(followerMotor.getMotor(), motorSetupFollower.inverted);
       }
       motorConfig.withFollowers(followers);
     }
+  }
+
+  public MechanismPositionConfig getMechanismPositionConfig() {
+    return new MechanismPositionConfig()
+        .withRelativePosition(robotToMotor.getTranslation3d())
+        .withMovementPlane(MechanismPositionConfig.Plane.valueOf(movementPlane));
   }
 }
