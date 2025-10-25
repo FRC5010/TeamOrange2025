@@ -14,6 +14,7 @@ import org.frc5010.common.arch.GenericRobot.LogLevel;
 import org.frc5010.common.motors.function.GenericFunctionalMotor;
 import org.frc5010.common.telemetry.DisplayValuesHelper;
 import org.littletonrobotics.junction.mechanism.LoggedMechanism2d;
+import yams.mechanisms.SmartMechanism;
 
 /** Base class for subsystems that provides default logging and network table support */
 public class GenericSubsystem extends SubsystemBase
@@ -128,6 +129,9 @@ public class GenericSubsystem extends SubsystemBase
               if (it instanceof GenericFunctionalMotor) {
                 ((GenericFunctionalMotor) it).periodicUpdate();
               }
+              if (it instanceof SmartMechanism) {
+                ((SmartMechanism) it).updateTelemetry();
+              }
             });
   }
 
@@ -142,6 +146,9 @@ public class GenericSubsystem extends SubsystemBase
             it -> {
               if (it instanceof GenericFunctionalMotor) {
                 ((GenericFunctionalMotor) it).simulationUpdate();
+              }
+              if (it instanceof SmartMechanism) {
+                ((SmartMechanism) it).simIterate();
               }
             });
   }
