@@ -70,6 +70,7 @@
       "/LiveWindow/Ungrouped/Pigeon 2 [13]": "Gyro",
       "/LiveWindow/Ungrouped/Scheduler": "Scheduler",
       "/Shuffleboard/BabySwerve/Auto Modes": "String Chooser",
+      "/Shuffleboard/Buttercup/Auto Modes": "String Chooser",
       "/Shuffleboard/ExampleRobot/Auto Modes": "String Chooser",
       "/SmartDashboard/Alerts": "Alerts",
       "/SmartDashboard/Arm/mechanism": "Mechanism2d",
@@ -81,6 +82,7 @@
       "/SmartDashboard/Field": "Field2d",
       "/SmartDashboard/IMU": "Alerts",
       "/SmartDashboard/JSON": "Alerts",
+      "/SmartDashboard/Mechanisms/ShooterMech/ShooterMotor/LiveTuning": "Command",
       "/SmartDashboard/Motors": "Alerts",
       "/SmartDashboard/PathPlanner": "Alerts",
       "/SmartDashboard/PhotonAlerts": "Alerts",
@@ -88,6 +90,7 @@
       "/SmartDashboard/Pigeon 2 [13]": "Gyro",
       "/SmartDashboard/Robot Visual": "Mechanism2d",
       "/SmartDashboard/SendableChooser[0]": "String Chooser",
+      "/SmartDashboard/ShooterMech/mechanism": "Mechanism2d",
       "/SmartDashboard/Swerve Drive": "Alerts",
       "/SmartDashboard/Turret/mechanism": "Mechanism2d",
       "/SmartDashboard/VisionSystemSim-Vision/Sim Field": "Field2d",
@@ -101,7 +104,7 @@
           "visible": true
         }
       },
-      "/Shuffleboard/ExampleRobot/Auto Modes": {
+      "/Shuffleboard/Buttercup/Auto Modes": {
         "window": {
           "visible": true
         }
@@ -683,7 +686,10 @@
         "height": 6.0,
         "image": ".\\pictures\\LobbinLoco.png",
         "right": 1432,
-        "width": 14.600000381469727
+        "width": 14.600000381469727,
+        "window": {
+          "visible": true
+        }
       }
     }
   },
@@ -740,6 +746,9 @@
         }
       }
     }
+  },
+  "NetworkTables Info": {
+    "visible": true
   },
   "NetworkTables View": {
     "visible": false

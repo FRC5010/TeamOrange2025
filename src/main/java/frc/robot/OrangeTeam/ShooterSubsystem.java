@@ -14,20 +14,17 @@ import static edu.wpi.first.units.Units.Seconds;
 import static yams.mechanisms.SmartMechanism.gearbox;
 import static yams.mechanisms.SmartMechanism.gearing;
 
-import java.util.Map;
-import java.util.function.BooleanSupplier;
-import java.util.function.DoubleSupplier;
-import java.util.function.Supplier;
-
-import org.frc5010.common.arch.GenericSubsystem;
-
 import com.thethriftybot.ThriftyNova;
-
 import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.interpolation.InterpolatingDoubleTreeMap;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.units.measure.AngularVelocity;
 import edu.wpi.first.wpilibj2.command.Command;
+import java.util.Map;
+import java.util.function.BooleanSupplier;
+import java.util.function.DoubleSupplier;
+import java.util.function.Supplier;
+import org.frc5010.common.arch.GenericSubsystem;
 import yams.mechanisms.config.ShooterConfig;
 import yams.mechanisms.velocity.Shooter;
 import yams.motorcontrollers.SmartMotorController;
@@ -39,13 +36,13 @@ import yams.motorcontrollers.local.NovaWrapper;
 
 public class ShooterSubsystem extends GenericSubsystem {
   private final ThriftyNova motor = new ThriftyNova(10);
-  private InterpolatingDoubleTreeMap distanceToVelocityMap = InterpolatingDoubleTreeMap.ofEntries(
-    Map.entry(0.0, 0.0),
-    Map.entry(0.5, 500.0),
-    Map.entry(1.0, 1000.0),
-    Map.entry(1.5, 1500.0)
-    
-  );
+  private InterpolatingDoubleTreeMap distanceToVelocityMap =
+      InterpolatingDoubleTreeMap.ofEntries(
+          Map.entry(0.0, 0.0),
+          Map.entry(0.5, 500.0),
+          Map.entry(1.0, 1000.0),
+          Map.entry(1.5, 1500.0));
+
   private final SmartMotorControllerConfig motorConfig =
       new SmartMotorControllerConfig(this)
           .withClosedLoopController(
@@ -72,8 +69,7 @@ public class ShooterSubsystem extends GenericSubsystem {
   private final Shooter shooter = new Shooter(shooterConfig);
 
   /** Creates a new Shooter. */
-  public ShooterSubsystem() {
-  }
+  public ShooterSubsystem() {}
 
   public Command setSpeed(double speed) {
     return shooter.set(speed);
@@ -81,16 +77,15 @@ public class ShooterSubsystem extends GenericSubsystem {
 
   public Command launchToDistance(DoubleSupplier distanceSupplier) {
     return shooter.setSpeed(
-      ()-> RPM.of(
-        distanceToVelocityMap.get(distanceSupplier.getAsDouble())));
+        () -> RPM.of(distanceToVelocityMap.get(distanceSupplier.getAsDouble())));
   }
 
   public Command spinAtSpeed(DoubleSupplier speedSupplier) {
     return shooter.setSpeed(RPM.of(speedSupplier.getAsDouble()));
   }
-  
+
   public Supplier<AngularVelocity> getVelocity() {
-    return ()-> shooter.getSpeed();
+    return () -> shooter.getSpeed();
   }
 
   public BooleanSupplier isNearTarget(AngularVelocity expected, AngularVelocity range) {
