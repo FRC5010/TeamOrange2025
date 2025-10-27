@@ -686,10 +686,7 @@
         "height": 6.0,
         "image": ".\\pictures\\LobbinLoco.png",
         "right": 1432,
-        "width": 14.600000381469727,
-        "window": {
-          "visible": true
-        }
+        "width": 14.600000381469727
       }
     }
   },
@@ -746,9 +743,6 @@
         }
       }
     }
-  },
-  "NetworkTables Info": {
-    "visible": true
   },
   "NetworkTables View": {
     "visible": false

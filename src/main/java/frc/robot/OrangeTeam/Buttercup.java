@@ -4,9 +4,14 @@
 
 package frc.robot.OrangeTeam;
 
+import static edu.wpi.first.units.Units.RPM;
+
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import org.frc5010.common.arch.GenericRobot;
+import org.frc5010.common.arch.StateMachine;
+import org.frc5010.common.arch.StateMachine.State;
 import org.frc5010.common.config.ConfigConstants;
 import org.frc5010.common.drive.GenericDrivetrain;
 import org.frc5010.common.sensors.Controller;
@@ -15,6 +20,7 @@ import org.frc5010.common.sensors.Controller;
 public class Buttercup extends GenericRobot {
   private GenericDrivetrain drivetrain;
   private ShooterSubsystem shooterSubsystem;
+  private StateMachine shooterStateMachine = new StateMachine("Shooter State Machine");
 
   public Buttercup(String directory) {
     super(directory);
@@ -48,5 +54,20 @@ public class Buttercup extends GenericRobot {
   @Override
   public void configureButtonBindings(Controller driver, Controller operator) {
     driver.createAButton().onTrue(shooterSubsystem.setSpeed(0.5));
+
+    JoystickButton rightBumper = driver.createRightBumper();
+
+    State idle =
+        shooterStateMachine.addState("idle", Commands.print("IDLE").andThen(Commands.idle()));
+    State prep =
+        shooterStateMachine.addState("prep", Commands.print("PREP").andThen(Commands.idle()));
+    State fire =
+        shooterStateMachine.addState("fire", Commands.print("FIRE").andThen(Commands.idle()));
+
+    shooterStateMachine.setInitialState(idle);
+    idle.switchTo(prep).when(rightBumper);
+    prep.switchTo(fire).when(shooterSubsystem.isNearTarget(RPM.of(3000), RPM.of(200)));
+    prep.switchTo(idle).when(() -> !rightBumper.getAsBoolean());
+    fire.switchTo(idle).when(() -> !rightBumper.getAsBoolean());
   }
 }
