@@ -95,31 +95,31 @@ public class PhotonVisionPoseCamera extends PhotonVisionCamera {
     super.updateCameraInfo();
     Set<Short> tagIds = new HashSet<>();
 
-    for (PhotonPipelineResult camResult : camResults) {
-      Optional<EstimatedRobotPose> estimate = poseEstimator.update(camResult);
+    for (PhotonPipelineResult iCamResult : camResults) {
+      Optional<EstimatedRobotPose> estimate = poseEstimator.update(iCamResult);
       if (estimate.isPresent()) {
         EstimatedRobotPose estimatedRobotPose = estimate.get();
         Pose3d robotPose = estimatedRobotPose.estimatedPose;
 
         double totalTagDistance = 0.0;
-        for (var target : camResult.targets) {
-          totalTagDistance += target.bestCameraToTarget.getTranslation().getNorm();
+        for (var iTarget : iCamResult.targets) {
+          totalTagDistance += iTarget.bestCameraToTarget.getTranslation().getNorm();
         }
         // Compute the average tag distance
         int tagCount = estimatedRobotPose.targetsUsed.size();
         double averageDistance = 0.0;
-        if (camResult.targets.size() > 0) {
-          averageDistance = totalTagDistance / camResult.targets.size();
+        if (!iCamResult.targets.isEmpty()) {
+          averageDistance = totalTagDistance / iCamResult.targets.size();
         }
 
         // Add tag IDs
-        camResult.multitagResult.map(it -> tagIds.addAll(it.fiducialIDsUsed));
+        iCamResult.multitagResult.map(it -> tagIds.addAll(it.fiducialIDsUsed));
 
         SmartDashboard.putNumber(
             "Camera/" + name() + "/Total Distance To Tag " + name, totalTagDistance);
         SmartDashboard.putNumber(
             "Camera/" + name() + "/Photon Ambiguity " + name,
-            camResult.getBestTarget().poseAmbiguity);
+            iCamResult.getBestTarget().poseAmbiguity);
         SmartDashboard.putNumberArray(
             "Camera/" + name() + "/Photon Camera " + name + " POSE",
             new double[] {
@@ -130,10 +130,10 @@ public class PhotonVisionPoseCamera extends PhotonVisionCamera {
 
         observations.add(
             new PoseObservation(
-                camResult.getTimestampSeconds(), // Timestamp
+                iCamResult.getTimestampSeconds(), // Timestamp
                 // 3D pose estimate
                 robotPose,
-                camResult.getBestTarget().poseAmbiguity,
+                iCamResult.getBestTarget().poseAmbiguity,
                 tagCount,
                 averageDistance,
                 PoseObservationType.PHOTONVISION,

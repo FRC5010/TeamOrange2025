@@ -3,14 +3,18 @@
   "use": "target",
   "type": "photonvision",
   "column": 0,
-  "x": -0.25,
+  "x": 0.25,
   "y": 0,
   "z": 0.25,
   "roll": 0,
-  "pitch": 20,
-  "yaw": 180,
+  "pitch": 10,
+  "yaw": 0,
   "targetFiducialIds": [
-    4,
-    11
+    17,
+    18,
+    19,
+    20,
+    21,
+    22
   ]
 }

@@ -63,6 +63,7 @@ public abstract class GenericCamera implements PoseProvider {
    *
    * @throws NullPointerException if any of the updaters are null
    */
+  @Override
   public void update() {
     updateCameraInfo();
     for (Runnable updater : updaters) {
@@ -145,4 +146,19 @@ public abstract class GenericCamera implements PoseProvider {
    * @return the area of the target
    */
   public abstract double getTargetArea();
+
+  /**
+   * A method to get the distance to the target.
+   *
+   * @return the distance to the target, or Double.MAX_VALUE if no valid target
+   */
+  public double getDistanceToTarget(double targetHeight) {
+    Transform3d camera2Robot = getRobotToCamera();
+    return hasValidTarget()
+        ? (targetHeight - camera2Robot.getTranslation().getZ())
+                / (Math.tan(Math.toRadians(getTargetPitch()) + camera2Robot.getRotation().getY())
+                    * Math.cos(Math.toRadians(getTargetYaw())))
+            + camera2Robot.getTranslation().getNorm()
+        : -1;
+  }
 }

@@ -4,9 +4,8 @@
 
 package org.frc5010.common.subsystems;
 
-import edu.wpi.first.math.geometry.Pose3d;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
 import java.util.List;
+
 import org.frc5010.common.arch.GenericSubsystem;
 import org.frc5010.common.constants.Constants;
 import org.frc5010.common.sensors.camera.GenericCamera;
@@ -14,6 +13,9 @@ import org.frc5010.common.sensors.camera.SimulatedCamera;
 import org.ironmaple.simulation.SimulatedArena;
 import org.photonvision.estimation.TargetModel;
 import org.photonvision.simulation.VisionTargetSim;
+
+import edu.wpi.first.math.geometry.Pose3d;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 /**
  * This class is an abstract class that needs to be implemented by any subclass of CameraSystem. It

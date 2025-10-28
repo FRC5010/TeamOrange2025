@@ -4,7 +4,7 @@
 
 package org.frc5010.common.subsystems;
 
-import edu.wpi.first.math.geometry.Transform3d;
+import edu.wpi.first.math.geometry.Pose2d;
 import org.frc5010.common.sensors.camera.GenericCamera;
 
 public class VisibleTargetSystem extends CameraSystem {
@@ -14,12 +14,15 @@ public class VisibleTargetSystem extends CameraSystem {
   protected double targetYaw = 0;
   protected String TARGET_PITCH = "targetPitch";
   protected String TARGET_YAW = "targetYaw";
+  protected String TARGET_DISTANCE = "targetDistance";
+  protected Pose2d targetPose = new Pose2d();
 
   public VisibleTargetSystem(GenericCamera camera, double targetHeight) {
     super(camera);
     this.targetHeight = targetHeight;
     values.declare(TARGET_PITCH, 0.0);
     values.declare(TARGET_YAW, 0.0);
+    values.declare(TARGET_DISTANCE, 0.0);
 
     camera.registerUpdater(
         () -> {
@@ -45,13 +48,7 @@ public class VisibleTargetSystem extends CameraSystem {
    */
   @Override
   public double getDistanceToTarget() {
-    Transform3d camera2Robot = camera.getRobotToCamera();
-    return hasTargets
-        ? (targetHeight - camera2Robot.getTranslation().getZ())
-                / (Math.tan(Math.toRadians(targetPitch) + camera2Robot.getRotation().getY())
-                    * Math.cos(Math.toRadians(targetYaw)))
-            + camera2Robot.getTranslation().getNorm()
-        : -1;
+    return camera.getDistanceToTarget(targetHeight);
   }
 
   /**
@@ -80,5 +77,11 @@ public class VisibleTargetSystem extends CameraSystem {
    */
   public double getTargetPitch() {
     return targetPitch;
+  }
+
+  @Override
+  public void periodic() {
+    super.periodic();
+    values.set(TARGET_DISTANCE, getDistanceToTarget());
   }
 }
