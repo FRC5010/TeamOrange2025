@@ -34,18 +34,18 @@ public class GenericSubsystem extends SubsystemBase
       new Alert(logPrefix + " Logging Mode is not COMPETITION!", AlertType.kWarning);
 
   /** Creates a new LoggedSubsystem. */
-  public GenericSubsystem(LoggedMechanism2d mechanismSimulation) {
+  protected GenericSubsystem(LoggedMechanism2d mechanismSimulation) {
     this.mechanismSimulation = mechanismSimulation;
     DashBoard = new DisplayValuesHelper(logPrefix, "values");
     WpiNetworkTableValuesHelper.register(this);
   }
 
-  public GenericSubsystem() {
+  protected GenericSubsystem() {
     DashBoard = new DisplayValuesHelper(logPrefix, "values");
     WpiNetworkTableValuesHelper.register(this);
   }
 
-  public GenericSubsystem(String configFile) {
+  protected GenericSubsystem(String configFile) {
     DashBoard = new DisplayValuesHelper(logPrefix, "values");
     try {
       GenericRobot.subsystemParser.parseSubsystem(this, configFile);
