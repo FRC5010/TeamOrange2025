@@ -28,7 +28,7 @@ import org.photonvision.PhotonPoseEstimator.PoseStrategy;
 import org.photonvision.targeting.PhotonPipelineResult;
 
 /** A camera using the PhotonVision library. */
-public class PhotonVisionPoseCamera extends PhotonVisionCamera {
+public class PhotonVisionPoseCamera extends PhotonVisionCamera implements FiducialTargetCamera {
   /** The pose estimator */
   protected PhotonPoseEstimator poseEstimator;
   /** The pose strategy */
@@ -177,5 +177,25 @@ public class PhotonVisionPoseCamera extends PhotonVisionCamera {
       linearStdDev = 100.0;
     }
     return VecBuilder.fill(linearStdDev, linearStdDev, angularStdDev);
+  }
+
+  /**
+   * Gets the current list of fiducial IDs for this camera.
+   *
+   * @return the current list of fiducial IDs
+   */
+  public List<Integer> getFiducialIds() {
+    return fiducialIds;
+  }
+
+  /**
+   * Sets the list of fiducial IDs for this camera. The camera will only consider targets with IDs
+   * in this list when locating targets. This does not change the list spefified at construction
+   * time to the pose camera so that the camera can be both a pose and target camera.
+   *
+   * @param fiducialIds the list of fiducial IDs to consider
+   */
+  public void setFiducialIds(List<Integer> fiducialIds) {
+    this.fiducialIds = fiducialIds;
   }
 }
