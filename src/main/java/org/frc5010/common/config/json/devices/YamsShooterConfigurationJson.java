@@ -4,13 +4,14 @@
 
 package org.frc5010.common.config.json.devices;
 
-import edu.wpi.first.math.controller.ArmFeedforward;
+import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import org.frc5010.common.config.DeviceConfiguration;
 import org.frc5010.common.config.UnitsParser;
 import org.frc5010.common.config.json.UnitValueJson;
 import org.frc5010.common.motors.GenericMotorController;
-import yams.mechanisms.SmartMechanism;
+import yams.gearing.GearBox;
+import yams.gearing.MechanismGearing;
 import yams.mechanisms.config.ShooterConfig;
 import yams.mechanisms.velocity.Shooter;
 import yams.motorcontrollers.SmartMotorController;
@@ -51,7 +52,7 @@ public class YamsShooterConfigurationJson implements DeviceConfiguration {
                 motorSystemId.feedBack.d,
                 UnitsParser.parseAngularVelocity(motorSystemId.maxVelocity),
                 UnitsParser.parseAngularAcceleration(motorSystemId.maxAcceleration))
-            .withGearing(SmartMechanism.gearing(SmartMechanism.gearbox(gearing)))
+            .withGearing(new MechanismGearing(GearBox.fromReductionStages(gearing)))
             .withIdleMode(MotorMode.valueOf(motorSetup.idleMode))
             .withTelemetry(
                 motorSetup.name + "Motor", TelemetryVerbosity.valueOf(motorSetup.logLevel))
@@ -60,9 +61,8 @@ public class YamsShooterConfigurationJson implements DeviceConfiguration {
             .withClosedLoopRampRate(UnitsParser.parseTime(motorSystemId.closedLoopRamp))
             .withOpenLoopRampRate(UnitsParser.parseTime(motorSystemId.openLoopRamp))
             .withFeedforward(
-                new ArmFeedforward(
+                new SimpleMotorFeedforward(
                     motorSystemId.feedForward.s,
-                    motorSystemId.feedForward.g,
                     motorSystemId.feedForward.v,
                     motorSystemId.feedForward.a))
             .withControlMode(ControlMode.valueOf(motorSystemId.controlMode));

@@ -69,6 +69,7 @@ public class ReflectionsManager {
       Object vendorObj = wrapper.getDeclaredConstructor(parameterTypes).newInstance(parameters);
       return (T) vendorObj;
     } catch (Exception e) {
+      e.printStackTrace();
       throw new RuntimeException(e);
     }
   }

@@ -26,6 +26,7 @@ public class RobotsParser {
         robot = configuredRobots.createRobot();
       } catch (IOException e) {
         System.err.println("Error reading robots.json file: " + e.getMessage());
+        e.printStackTrace();
         throw new RuntimeException(e);
       }
     }
