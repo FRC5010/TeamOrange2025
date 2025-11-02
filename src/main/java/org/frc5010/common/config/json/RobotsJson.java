@@ -63,6 +63,7 @@ public class RobotsJson {
           | IllegalAccessException
           | InvocationTargetException e) {
         System.err.println("Error creating robot instance: " + e.getMessage());
+        e.printStackTrace();
         throw new RuntimeException(e);
       }
     } else {
