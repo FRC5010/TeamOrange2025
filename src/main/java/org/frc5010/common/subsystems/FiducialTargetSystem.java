@@ -5,9 +5,11 @@
 package org.frc5010.common.subsystems;
 
 import edu.wpi.first.math.geometry.Pose2d;
+import java.util.List;
+import org.frc5010.common.sensors.camera.FiducialTargetCamera;
 import org.frc5010.common.sensors.camera.GenericCamera;
 
-public class VisibleTargetSystem extends CameraSystem {
+public class FiducialTargetSystem extends CameraSystem {
   protected boolean hasTargets = false;
   protected double targetHeight = 0;
   protected double targetPitch = 0;
@@ -17,26 +19,25 @@ public class VisibleTargetSystem extends CameraSystem {
   protected String TARGET_DISTANCE = "targetDistance";
   protected Pose2d targetPose = new Pose2d();
 
-  public VisibleTargetSystem(GenericCamera camera, double targetHeight) {
-    super(camera);
-    this.targetHeight = targetHeight;
+  public FiducialTargetSystem(FiducialTargetCamera camera) {
+    super((GenericCamera) camera);
     values.declare(TARGET_PITCH, 0.0);
     values.declare(TARGET_YAW, 0.0);
     values.declare(TARGET_DISTANCE, 0.0);
 
-    camera.registerUpdater(
+    this.camera.registerUpdater(
         () -> {
-          hasTargets = camera.hasValidTarget();
+          hasTargets = this.camera.hasValidTarget();
           values.set(HAS_VALID_TARGET, hasTargets);
         });
-    camera.registerUpdater(
+    this.camera.registerUpdater(
         () -> {
-          targetYaw = camera.getTargetYaw();
+          targetYaw = this.camera.getTargetYaw();
           values.set(TARGET_YAW, targetYaw);
         });
-    camera.registerUpdater(
+    this.camera.registerUpdater(
         () -> {
-          targetPitch = camera.getTargetPitch();
+          targetPitch = this.camera.getTargetPitch();
           values.set(TARGET_PITCH, targetPitch);
         });
   }
@@ -83,5 +84,25 @@ public class VisibleTargetSystem extends CameraSystem {
   public void periodic() {
     super.periodic();
     values.set(TARGET_DISTANCE, getDistanceToTarget());
+  }
+
+  /**
+   * Gets the current list of fiducial IDs for this camera.
+   *
+   * @return the current list of fiducial IDs
+   */
+  public List<Integer> getFiducialIds() {
+    return ((FiducialTargetCamera) camera).getFiducialIds();
+  }
+
+  /**
+   * Sets the list of fiducial IDs for this camera. The camera will only consider targets with IDs
+   * in this list when locating targets. This does not change the list spefified at construction
+   * time to the pose camera so that the camera can be both a pose and target camera.
+   *
+   * @param fiducialIds the list of fiducial IDs to consider
+   */
+  public void setFiducialIds(List<Integer> fiducialIds) {
+    ((FiducialTargetCamera) camera).setFiducialIds(fiducialIds);
   }
 }

@@ -28,7 +28,7 @@ import org.photonvision.PhotonPoseEstimator.PoseStrategy;
 import org.photonvision.targeting.PhotonPipelineResult;
 
 /** A camera using the PhotonVision library. */
-public class PhotonVisionPoseCamera extends PhotonVisionCamera {
+public class PhotonVisionPoseCamera extends PhotonVisionCamera implements FiducialTargetCamera {
   /** The pose estimator */
   protected PhotonPoseEstimator poseEstimator;
   /** The pose strategy */
@@ -95,31 +95,31 @@ public class PhotonVisionPoseCamera extends PhotonVisionCamera {
     super.updateCameraInfo();
     Set<Short> tagIds = new HashSet<>();
 
-    for (PhotonPipelineResult camResult : camResults) {
-      Optional<EstimatedRobotPose> estimate = poseEstimator.update(camResult);
+    for (PhotonPipelineResult iCamResult : camResults) {
+      Optional<EstimatedRobotPose> estimate = poseEstimator.update(iCamResult);
       if (estimate.isPresent()) {
         EstimatedRobotPose estimatedRobotPose = estimate.get();
         Pose3d robotPose = estimatedRobotPose.estimatedPose;
 
         double totalTagDistance = 0.0;
-        for (var target : camResult.targets) {
-          totalTagDistance += target.bestCameraToTarget.getTranslation().getNorm();
+        for (var iTarget : iCamResult.targets) {
+          totalTagDistance += iTarget.bestCameraToTarget.getTranslation().getNorm();
         }
         // Compute the average tag distance
         int tagCount = estimatedRobotPose.targetsUsed.size();
         double averageDistance = 0.0;
-        if (camResult.targets.size() > 0) {
-          averageDistance = totalTagDistance / camResult.targets.size();
+        if (!iCamResult.targets.isEmpty()) {
+          averageDistance = totalTagDistance / iCamResult.targets.size();
         }
 
         // Add tag IDs
-        camResult.multitagResult.map(it -> tagIds.addAll(it.fiducialIDsUsed));
+        iCamResult.multitagResult.map(it -> tagIds.addAll(it.fiducialIDsUsed));
 
         SmartDashboard.putNumber(
             "Camera/" + name() + "/Total Distance To Tag " + name, totalTagDistance);
         SmartDashboard.putNumber(
             "Camera/" + name() + "/Photon Ambiguity " + name,
-            camResult.getBestTarget().poseAmbiguity);
+            iCamResult.getBestTarget().poseAmbiguity);
         SmartDashboard.putNumberArray(
             "Camera/" + name() + "/Photon Camera " + name + " POSE",
             new double[] {
@@ -130,10 +130,10 @@ public class PhotonVisionPoseCamera extends PhotonVisionCamera {
 
         observations.add(
             new PoseObservation(
-                camResult.getTimestampSeconds(), // Timestamp
+                iCamResult.getTimestampSeconds(), // Timestamp
                 // 3D pose estimate
                 robotPose,
-                camResult.getBestTarget().poseAmbiguity,
+                iCamResult.getBestTarget().poseAmbiguity,
                 tagCount,
                 averageDistance,
                 PoseObservationType.PHOTONVISION,
@@ -177,5 +177,25 @@ public class PhotonVisionPoseCamera extends PhotonVisionCamera {
       linearStdDev = 100.0;
     }
     return VecBuilder.fill(linearStdDev, linearStdDev, angularStdDev);
+  }
+
+  /**
+   * Gets the current list of fiducial IDs for this camera.
+   *
+   * @return the current list of fiducial IDs
+   */
+  public List<Integer> getFiducialIds() {
+    return fiducialIds;
+  }
+
+  /**
+   * Sets the list of fiducial IDs for this camera. The camera will only consider targets with IDs
+   * in this list when locating targets. This does not change the list spefified at construction
+   * time to the pose camera so that the camera can be both a pose and target camera.
+   *
+   * @param fiducialIds the list of fiducial IDs to consider
+   */
+  public void setFiducialIds(List<Integer> fiducialIds) {
+    this.fiducialIds = fiducialIds;
   }
 }

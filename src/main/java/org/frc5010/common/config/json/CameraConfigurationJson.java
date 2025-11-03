@@ -15,6 +15,7 @@ import java.util.List;
 import org.frc5010.common.arch.GenericRobot;
 import org.frc5010.common.drive.GenericDrivetrain;
 import org.frc5010.common.drive.swerve.GenericSwerveDrivetrain;
+import org.frc5010.common.sensors.camera.FiducialTargetCamera;
 import org.frc5010.common.sensors.camera.GenericCamera;
 import org.frc5010.common.sensors.camera.LimeLightCamera;
 import org.frc5010.common.sensors.camera.PhotonVisionCamera;
@@ -25,6 +26,7 @@ import org.frc5010.common.sensors.camera.QuestNav;
 import org.frc5010.common.sensors.camera.SimulatedCamera;
 import org.frc5010.common.sensors.camera.SimulatedFiducialTargetCamera;
 import org.frc5010.common.sensors.camera.SimulatedVisualTargetCamera;
+import org.frc5010.common.subsystems.FiducialTargetSystem;
 import org.frc5010.common.subsystems.VisibleTargetSystem;
 import org.frc5010.common.vision.AprilTags;
 import org.photonvision.PhotonPoseEstimator.PoseStrategy;
@@ -228,8 +230,14 @@ public class CameraConfigurationJson {
     }
     switch (use) {
       case "target":
-        robot.addSubsystem(name, new VisibleTargetSystem(camera, targetHeight));
-        break;
+        {
+          if (targetFiducialIds.length > 0) {
+            robot.addSubsystem(name, new FiducialTargetSystem((FiducialTargetCamera) camera));
+          } else {
+            robot.addSubsystem(name, new VisibleTargetSystem(camera, targetHeight));
+          }
+          break;
+        }
       case "apriltag":
         {
           if (drivetrain != null) {

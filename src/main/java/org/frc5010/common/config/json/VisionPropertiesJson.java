@@ -72,6 +72,7 @@ public class VisionPropertiesJson {
           | IllegalAccessException
           | InvocationTargetException e) {
         System.err.println("Error creating arena instance: " + e.getMessage());
+        e.printStackTrace();
         throw new RuntimeException(e);
       }
     }
