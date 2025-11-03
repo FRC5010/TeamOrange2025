@@ -1,16 +1,16 @@
 {
   "drive": {
-    "type": "neo",
-    "id": 17,
+    "type": "nova_neo",
+    "id": 3,
     "canbus": null
   },
   "angle": {
-    "type": "neo",
-    "id": 6,
+    "type": "nova_neo",
+    "id": 4,
     "canbus": null
   },
   "encoder": {
-    "type": "canandcoder",
+    "type": "thrifty_nova_redux",
     "id": 0,
     "canbus": null
   },
@@ -20,7 +20,7 @@
   },
   "absoluteEncoderInverted": true,
   "location": {
-    "front": -8.37,
-    "left": 10.88
+    "front": -9.2813,
+    "left": 9.2813
   }
 }
