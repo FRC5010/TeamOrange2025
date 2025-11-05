@@ -1,6 +1,12 @@
 {
   "competitionPin": 0,
   "robots": {
+    "buttercup_swerve": {
+      "id": "buttercup",
+      "robotClass": "frc.robot.OrangeTeam.Buttercup",
+      "simulate": true,
+      "competition": true
+    },
     "basic_robot": {
       "id": "basic_robot",
       "robotClass": "frc.robot.example.ExampleRobot",
@@ -11,12 +17,6 @@
       "robotClass": "frc.robot.baby_swerve.BabySwerve",
       "simulate": false,
       "competition": false
-    },
-    "buttercup_swerve": {
-      "id": "buttercup",
-      "robotClass": "frc.robot.OrangeTeam.Buttercup",
-      "simulate": true,
-      "competition": true
     }
   }
 }
