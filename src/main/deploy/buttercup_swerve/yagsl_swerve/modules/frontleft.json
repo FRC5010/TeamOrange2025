@@ -10,7 +10,7 @@
     "canbus": null
   },
   "encoder": {
-    "type": "thrifty_nova",
+    "type": "thrifty_nova_redux",
     "id": 0,
     "canbus": null
   },
