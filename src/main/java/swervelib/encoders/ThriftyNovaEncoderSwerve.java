@@ -1,11 +1,11 @@
 package swervelib.encoders;
 
 import com.thethriftybot.Conversion;
-import com.thethriftybot.Conversion.PositionUnit;
 import com.thethriftybot.Conversion.VelocityUnit;
 import com.thethriftybot.ThriftyNova;
 import com.thethriftybot.ThriftyNova.EncoderType;
 import com.thethriftybot.ThriftyNova.ExternalEncoder;
+
 import swervelib.motors.SwerveMotor;
 import swervelib.motors.ThriftyNovaSwerve;
 
@@ -18,8 +18,6 @@ public class ThriftyNovaEncoderSwerve extends SwerveAbsoluteEncoder {
   protected boolean inverted = false;
   /** Offset of the absolute encoder. */
   protected double offset = 0.0;
-  /** Position conversion object for the motor encoder */
-  private Conversion positionConversion;
   /** Velocity conversion object for the motor encoder */
   private Conversion velocityConversion;
 
@@ -31,10 +29,10 @@ public class ThriftyNovaEncoderSwerve extends SwerveAbsoluteEncoder {
    */
   public ThriftyNovaEncoderSwerve(SwerveMotor motor, String encoderType) {
     this.motor = (ThriftyNova) motor.getMotor();
-    positionConversion = new Conversion(PositionUnit.DEGREES, EncoderType.ABS);
     velocityConversion = new Conversion(VelocityUnit.DEGREES_PER_SEC, EncoderType.ABS);
     this.motor.setExternalEncoder(ExternalEncoder.valueOf(encoderType));
-    this.motor.useEncoderType(EncoderType.ABS);
+    setAbsoluteEncoderOffset(offset);
+    this.motor.setAbsoluteWrapping(true);
   }
 
   @Override
@@ -69,9 +67,8 @@ public class ThriftyNovaEncoderSwerve extends SwerveAbsoluteEncoder {
    */
   @Override
   public double getAbsolutePosition() {
-    double rawMotor = motor.getPosition();
-    double convertedMotor = positionConversion.fromMotor(rawMotor);
-    return (convertedMotor + offset) * (inverted ? -1.0 : 1.0);
+    double rawMotor = motor.getPositionAbs();
+    return rawMotor * (inverted ? -1.0 : 1.0);
   }
 
   /** Get the instantiated absolute encoder Object. */
@@ -89,6 +86,7 @@ public class ThriftyNovaEncoderSwerve extends SwerveAbsoluteEncoder {
   @Override
   public boolean setAbsoluteEncoderOffset(double offset) {
     this.offset = offset;
+    motor.setAbsOffset((int)offset);
     return true;
   }
 
