@@ -1,5 +1,5 @@
 {
-  "directory": "buttercup_swerve",
+  "directory": "buttercup_swerve/yagsl_swerve",
   "turningMotorGearRatio": 1.0,
   "driveModules": [
     "frontleft.json",
