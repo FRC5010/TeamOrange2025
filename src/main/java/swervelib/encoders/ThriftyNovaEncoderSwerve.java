@@ -5,7 +5,6 @@ import com.thethriftybot.Conversion.VelocityUnit;
 import com.thethriftybot.ThriftyNova;
 import com.thethriftybot.ThriftyNova.EncoderType;
 import com.thethriftybot.ThriftyNova.ExternalEncoder;
-
 import swervelib.motors.SwerveMotor;
 import swervelib.motors.ThriftyNovaSwerve;
 
@@ -67,7 +66,7 @@ public class ThriftyNovaEncoderSwerve extends SwerveAbsoluteEncoder {
    */
   @Override
   public double getAbsolutePosition() {
-    double rawMotor = motor.getPositionAbs();
+    double rawMotor = motor.getPositionAbs() * (360 / 4096);
     return rawMotor * (inverted ? -1.0 : 1.0);
   }
 
@@ -86,7 +85,7 @@ public class ThriftyNovaEncoderSwerve extends SwerveAbsoluteEncoder {
   @Override
   public boolean setAbsoluteEncoderOffset(double offset) {
     this.offset = offset;
-    motor.setAbsOffset((int)offset);
+    motor.setAbsOffset((int) offset);
     return true;
   }
 
